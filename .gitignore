@@ -1,7 +1,4 @@
 venv
 .vscode
-lyceum/.env
-lyceum/about/__pycache__/
-lyceum/catalog/__pycache__/
-lyceum/homepage/__pycache__/
-lyceum/lyceum/__pycache__/
+.env
+__pycache__
