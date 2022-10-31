@@ -5,7 +5,6 @@ from core.models import AbstractModel, AbstractModelWithSlug
 
 
 class Tag(AbstractModelWithSlug):
-
     class Meta:
         verbose_name_plural = 'Тэги'
 
