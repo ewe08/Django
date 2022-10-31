@@ -1,23 +1,18 @@
 from django.db import models
+
 from .validators import validate_must_be_param
+from core.models import AbstractModel, AbstractModelWithSlug
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=150)
-    is_published = models.BooleanField(default=True)
-    slug = models.SlugField(max_length=200, unique=True)
+class Tag(AbstractModelWithSlug):
+    pass
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=150)
-    is_published = models.BooleanField(default=True)
+class Category(AbstractModelWithSlug):
     weight = models.PositiveSmallIntegerField(default=100)
-    slug = models.SlugField(max_length=200, unique=True)
 
 
-class Item(models.Model):
-    is_published = models.BooleanField(default=True)
-    name = models.CharField(max_length=150)
+class Item(AbstractModel):
     text = models.TextField(validators=[validate_must_be_param])
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
