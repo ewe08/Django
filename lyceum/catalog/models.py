@@ -20,4 +20,4 @@ class Item(models.Model):
     name = models.CharField(max_length=150)
     text = models.TextField(validators=[validate_must_be_param])
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
