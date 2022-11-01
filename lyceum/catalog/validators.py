@@ -2,6 +2,9 @@ from functools import wraps
 
 from django.core.exceptions import ValidationError
 
+# Функция для валидации TextField, в которой обязательно
+# должны быть заданные слова (args)
+
 
 def validate_must_be_param(*args):
     @wraps(validate_must_be_param)
