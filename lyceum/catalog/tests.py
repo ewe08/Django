@@ -39,7 +39,63 @@ class RegularExpressionsTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
 
-class ModelsTest(TestCase):
+class CategoryTest(TestCase):
+    def test_zero_weight(self):
+        category_count = Category.objects.count()
+        with self.assertRaises(ValidationError):
+            test_category = Category(name='Test Category',
+                                     slug='test-category-slug',
+                                     is_published=True,
+                                     weight=0)
+            test_category.full_clean()
+            test_category.save()
+        self.assertEqual(Category.objects.count(), category_count)
+
+    def test_negative_weight(self):
+        category_count = Category.objects.count()
+        with self.assertRaises(ValidationError):
+            test_category = Category(name='Test Category',
+                                     slug='test-category-slug',
+                                     is_published=True,
+                                     weight=-14)
+            test_category.full_clean()
+            test_category.save()
+        self.assertEqual(Category.objects.count(), category_count)
+
+    def test_limit_weight(self):
+        category_count = Category.objects.count()
+        with self.assertRaises(ValidationError):
+            test_category = Category(name='Test Category',
+                                     slug='test-category-slug',
+                                     is_published=True,
+                                     weight=32767)
+            test_category.full_clean()
+            test_category.save()
+        self.assertEqual(Category.objects.count(), category_count)
+
+    def test_over_limit_weight(self):
+        category_count = Category.objects.count()
+        with self.assertRaises(ValidationError):
+            test_category = Category(name='Test Category',
+                                     slug='test-category-slug',
+                                     is_published=True,
+                                     weight=50000)
+            test_category.full_clean()
+            test_category.save()
+        self.assertEqual(Category.objects.count(), category_count)
+
+    def test_right_weight(self):
+        category_count = Category.objects.count()
+        test_category = Category(name='Test Category',
+                                 slug='test-category-slug',
+                                 is_published=True,
+                                 weight=155)
+        test_category.full_clean()
+        test_category.save()
+        self.assertEqual(Category.objects.count(), category_count + 1)
+
+
+class ItemTest(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()

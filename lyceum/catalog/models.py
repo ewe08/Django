@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from .validators import validate_must_be_param
 from core.models import AbstractModel, AbstractModelWithSlug
@@ -10,7 +11,10 @@ class Tag(AbstractModelWithSlug):
 
 
 class Category(AbstractModelWithSlug):
-    weight = models.PositiveSmallIntegerField('Вес', default=100)
+    weight = models.PositiveSmallIntegerField('Вес', default=100,
+                                              validators=[
+                                                MaxValueValidator(32766),
+                                                MinValueValidator(1)])
 
     class Meta:
         verbose_name_plural = 'Категории'
