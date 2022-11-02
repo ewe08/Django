@@ -22,6 +22,11 @@ ALLOWED_HOSTS=127.0.0.1 localhost
 Выполняем:
 ```
 cd lyceum
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
 ```
 Для просмотра по умолчанию переходим на: http://127.0.0.1:8000/ или http://localhost:8000/
+## База данных
+![изображение](https://user-images.githubusercontent.com/56339316/199190666-92eb09a1-89a9-4b11-b955-b6df7c5173d1.png)
