@@ -166,3 +166,14 @@ class ItemTest(TestCase):
         self.item.full_clean()
         self.item.save()
         self.assertEqual(Item.objects.count(), item_count + 1)
+
+    def test_have_word_and_punct(self):
+        item_count = Item.objects.count()
+
+        self.item = Item(name='Test item#3',
+                         is_published=True,
+                         category=self.category,
+                         text='tut est роскошно!')
+        self.item.full_clean()
+        self.item.save()
+        self.assertEqual(Item.objects.count(), item_count + 1)
