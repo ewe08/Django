@@ -41,18 +41,21 @@ class RegularExpressionsTests(TestCase):
 
 class CategoryTest(TestCase):
     # Тест нулевого значения веса в категории
+    def tearDown(self):
+        Category.objects.all().delete()
+        super().tearDown()
+
     def test_zero_weight(self):
         # Получение количества объектов до
         category_count = Category.objects.count()
-        with self.assertRaises(ValidationError):
-            test_category = Category(name='Test Category',
-                                     slug='test-category-slug',
-                                     is_published=True,
-                                     weight=0)
-            test_category.full_clean()
-            test_category.save()
-        # Сраниванем с количеством после. Значения должны совпадать
-        self.assertEqual(Category.objects.count(), category_count)
+        test_category = Category(name='Test Category',
+                                 slug='test-category-slug',
+                                 is_published=True,
+                                 weight=0)
+        test_category.full_clean()
+        test_category.save()
+        # Сраниванем с количеством после. Должны отличаться на 1
+        self.assertEqual(Category.objects.count(), category_count + 1)
 
     # Тест отрицательного значения веса в категории
     def test_negative_weight(self):
@@ -69,14 +72,13 @@ class CategoryTest(TestCase):
     # Тест граничного случая веса в категории
     def test_limit_weight(self):
         category_count = Category.objects.count()
-        with self.assertRaises(ValidationError):
-            test_category = Category(name='Test Category',
-                                     slug='test-category-slug',
-                                     is_published=True,
-                                     weight=32767)
-            test_category.full_clean()
-            test_category.save()
-        self.assertEqual(Category.objects.count(), category_count)
+        test_category = Category(name='Test Category',
+                                 slug='test-category-slug',
+                                 is_published=True,
+                                 weight=32767)
+        test_category.full_clean()
+        test_category.save()
+        self.assertEqual(Category.objects.count(), category_count + 1)
 
     # Тест веса значения намногов выше предела в категории
     def test_over_limit_weight(self):
@@ -114,9 +116,14 @@ class ItemTest(TestCase):
         cls.tag = Tag.objects.create(name='Test tag', is_published=True,
                                      slug='test-tag-slug')
 
-    # Тест предмета, если в описании нет обязательных слов
-    # (превосходно или роскошно)
+    def tearDown(self):
+        Item.objects.all().delete()
+        super().tearDown()
+
     def test_has_no_words(self):
+        # Тест предмета, если в описании нет обязательных слов
+        # (превосходно или роскошно)
+
         # Количество объектов до
         item_count = Item.objects.count()
 
