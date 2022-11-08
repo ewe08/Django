@@ -1,0 +1,44 @@
+{% load static %}
+
+<header>
+    <nav class="container navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand" href="{% url 'homepage:home' %}">
+            <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                Pied Piper
+            </a>
+          <ul class="navbar-nav">
+            {% with request.resolver_match.view_name as view_name %}
+                {% if view_name == 'homepage:home' %}
+                    <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'homepage:home' %}">На главную </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'homepage:home' %}">На главную </a>
+                    </li>
+                {% endif %}
+
+                {% if view_name == 'about:about' %}
+                <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'about:about' %}">О проекте</a>
+                    </li>
+                {% else %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'about:about' %}">О проекте</a>
+                </li>
+                {% endif %}
+                {% if view_name == 'catalog:item_list' %}
+                    <li class="nav-item active">
+                    <a class="nav-link active" href="{% url 'catalog:item_list' %}">Список товаров</a>
+                    </li>
+                {% else %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'catalog:item_list' %}">Список товаров</a>
+                </li>
+                {% endif %}
+            {% endwith %}
+          </ul>
+        </div>
+      </nav>
+</header>

@@ -11,7 +11,8 @@ def validate_must_be_param(*args):
     @wraps(validate_must_be_param)
     def word_validate(value):
         must_be_in_our_item = set(args)
-        cleaned_value = re.sub(r'[^\w\s]', '', value)
+        cleaned_value = re.sub(r'(\<(/?[^>]+)>)', '', value)
+        cleaned_value = re.sub(r'[^\w\s]', '', cleaned_value)
         cleaned_value = set(cleaned_value.lower().split())
         if not (cleaned_value & must_be_in_our_item):
             raise ValidationError(

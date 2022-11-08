@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <h1>Подробнее про {{ item.name }}</h1>
+
+    <h2 class="name_cells">{{ item.name }}</h2>
+    <div class="card-body">
+        <p class="card-text">Название: <b>{{ item.name }}</b></p>
+        <p class="card-text">Категория: <b>{{ item.category.name }}</b></p>
+        <p class="card-text">Описание: <b>{{ item.text }}</b></p>
+    </div>
+
+{% endblock  %}
