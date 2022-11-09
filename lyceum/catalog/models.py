@@ -80,8 +80,24 @@ class Photo(models.Model):
         Item,
         verbose_name='предмет',
         on_delete=models.CASCADE,
-        help_text='Предмет. Связь o2m.')
+        help_text='Предмет. Связь o2m.',
+        null=True,
+        blank=True
+    )
 
     class Meta:
         verbose_name = 'фото'
         verbose_name_plural = 'фотографии'
+
+    @property
+    def get_img(self):
+        return get_thumbnail(self.upload, '300x300', crop='center', quality=51)
+
+    def image_tmb(self):
+        if self.upload:
+            return mark_safe(
+                f'<img src="{self.get_img.url}">'
+            )
+
+    image_tmb.short_description = 'превью'
+    image_tmb.allow_tags = True

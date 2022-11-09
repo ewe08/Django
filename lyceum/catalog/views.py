@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Item
+from .models import Item, Photo
 
 
 def item_list(request):
@@ -9,5 +9,8 @@ def item_list(request):
 
 
 def item_detail(request, pk: int):
-    context = {'title': 'Подробнее', 'item': Item.objects.get(id=pk)}
+    print(Photo.objects.filter(item=pk))
+    context = {'title': 'Подробнее',
+               'item': Item.objects.get(id=pk),
+               'photos': Photo.objects.filter(item=pk)}
     return render(request, 'catalog/index_detail.html', context=context)

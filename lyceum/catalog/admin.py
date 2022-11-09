@@ -6,6 +6,11 @@ admin.site.register(Tag)
 admin.site.register(Photo)
 
 
+class GalleryInline(admin.TabularInline):
+    fk_name = 'item'
+    model = Photo
+
+
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     list_display = [
@@ -16,3 +21,4 @@ class ItemAdmin(admin.ModelAdmin):
     list_editable = ['is_published', ]
     list_display_links = ['name', ]
     filter_horizontal = ['tags', ]
+    inlines = [GalleryInline, ]

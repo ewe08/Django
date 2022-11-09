@@ -9,7 +9,10 @@
     <div class="card-body">
         <p class="card-text">Название: <b>{{ item.name }}</b></p>
         <p class="card-text">Категория: <b>{{ item.category.name }}</b></p>
-        <p class="card-text">Описание: <b>{{ item.text }}</b></p>
+        <p class="card-text">Описание: {{ item.text|safe }}</p>
+        {% for image in photos %}
+            <img src="{{ image.image.url }}" alt="connect" style="height:300px">
+        {% endfor %}
     </div>
 
 {% endblock  %}
