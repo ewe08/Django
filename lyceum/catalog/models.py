@@ -54,18 +54,40 @@ class Item(AbstractModel):
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
 
-    upload = models.ImageField(
-        upload_to='uploads/%Y/%m',
-        blank=True,
+
+class Photo(models.Model):
+    image = models.ImageField(
+        'изображение',
+        upload_to='uploads/%Y/%m'
+    )
+
+    item_main = models.OneToOneField(
+        Item,
+        on_delete=models.CASCADE,
         null=True,
+        blank=True,
+    )
+
+    item_galery = models.ForeignKey(
+        Item,
+        verbose_name='галерея фотографий',
+        on_delete=models.CASCADE,
+        help_text='фотографии предмета.',
+        related_name='item_galery',
+        null=True,
+        blank=True
     )
 
     @property
     def get_img(self):
-        return get_thumbnail(self.upload, '300x300', crop='center', quality=51)
+        return get_thumbnail(
+            self.image,
+            '300x300',
+            crop='center',
+            quality=51)
 
     def image_tmb(self):
-        if self.upload:
+        if self.image:
             return mark_safe(
                 f'<img src="{self.get_img.url}">'
             )
@@ -73,17 +95,8 @@ class Item(AbstractModel):
     image_tmb.short_description = 'превью'
     image_tmb.allow_tags = True
 
-
-class Photo(models.Model):
-    image = models.ImageField(upload_to='uploads/%Y/%m')
-    item = models.ForeignKey(
-        Item,
-        verbose_name='предмет',
-        on_delete=models.CASCADE,
-        help_text='Предмет. Связь o2m.',
-        null=True,
-        blank=True
-    )
+    def __str__(self):
+        return self.image.name
 
     class Meta:
         verbose_name = 'фото'
