@@ -7,7 +7,6 @@ def item_list(request):
     context = {
         'title': 'Список',
         'items': Item.objects.all(),
-        'photos': Photo.objects.all()
     }
     return render(request, 'catalog/index_list.html', context=context)
 
