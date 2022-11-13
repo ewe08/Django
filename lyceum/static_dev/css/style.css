@@ -1,0 +1,10 @@
+.cells {
+    display: flex;
+}
+
+.card {
+    padding: 5px;
+    margin-left: 10px;
+    width: 18rem;
+    height: 350px;
+}
