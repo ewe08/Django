@@ -232,8 +232,8 @@ class ItemListTest(TestCase):
 
     def test_list_show_correct_content(self):
         response = Client().get(reverse('catalog:item_list'))
-        self.assertIn('items', response.context)
-        self.assertEqual(len(response.context['items']), 0)
+        self.assertIn('categories', response.context)
+        self.assertEqual(len(response.context['categories']), 0)
 
     def test_list_with_object_show_correct_content(self):
         test_item = Item(name='test',
@@ -246,5 +246,5 @@ class ItemListTest(TestCase):
         test_item.save()
 
         response = Client().get(reverse('catalog:item_list'))
-        self.assertIn('items', response.context)
-        self.assertEqual(len(response.context['items']), 1)
+        self.assertIn('categories', response.context)
+        self.assertEqual(len(response.context['categories']), 1)
