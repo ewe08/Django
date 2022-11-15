@@ -4,19 +4,6 @@
 
 {% block content %}
     <h1>Товары</h1>
-    <div class="cells">
-        {% for item in items %}
-            <div class="card">
-                <h2 class="name_cells">{{ item.name }}</h2>
-                <div class="card-body">
-                    <p class="card-text">Название: <b>{{ item.name }}</b></p>
-                    <p class="card-text">Категория: <b>{{ item.category.name }}</b></p>
-                </div>
-                <a href="{% url 'catalog:item_detail' item.pk%}" class="btn btn-success detail-btn">
-                    Посмотреть
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+    {% include 'includes/card.html' %}
 
 {% endblock  %}

@@ -1,5 +1,6 @@
 from django.test import Client, TestCase
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 from .models import Category, Tag, Item
 
@@ -38,6 +39,8 @@ class RegularExpressionsTests(TestCase):
         test_item.save()
         response = Client().get('/catalog/123/')
         self.assertEqual(response.status_code, 200)
+        response = Client().get('/catalog/1/')
+        self.assertEqual(response.status_code, 404)
 
     def test_catalog_pk_true_endpoint_2(self):
         test_item = Item(pk=1, name='test',
@@ -211,3 +214,37 @@ class ItemTest(TestCase):
         self.item.full_clean()
         self.item.save()
         self.assertEqual(Item.objects.count(), item_count + 1)
+
+
+class ItemListTest(TestCase):
+    def tearDown(self):
+        Item.objects.all().delete()
+        super().tearDown()
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.category = Category.objects.create(name='Test Category',
+                                               slug='test-category-slug',
+                                               is_published=True, weight=50)
+        cls.tag = Tag.objects.create(name='Test tag', is_published=True,
+                                     slug='test-tag-slug')
+
+    def test_list_show_correct_content(self):
+        response = Client().get(reverse('catalog:item_list'))
+        self.assertIn('items', response.context)
+        self.assertEqual(len(response.context['items']), 0)
+
+    def test_list_with_object_show_correct_content(self):
+        test_item = Item(name='test',
+                         is_published=True,
+                         category=self.category,
+                         text='Превосходно',
+                         is_on_main=True,
+                         )
+        test_item.full_clean()
+        test_item.save()
+
+        response = Client().get(reverse('catalog:item_list'))
+        self.assertIn('items', response.context)
+        self.assertEqual(len(response.context['items']), 1)
