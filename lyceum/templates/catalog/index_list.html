@@ -4,6 +4,9 @@
 
 {% block content %}
     <h1>Товары</h1>
-    {% include 'includes/card.html' %}
+    {% for cat, items in categories.items %}
+        <h4 style='text-align:center;'>{{ cat.name }}</h4>
+        {% include 'includes/card.html' %}
+    {% endfor %}
 
 {% endblock  %}
