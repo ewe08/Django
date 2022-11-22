@@ -8,7 +8,18 @@ from .validators import validate_must_be_param
 from core.models import AbstractModel, AbstractModelWithSlug
 
 
+class TagManager(models.Manager):
+    def published(self):
+        return (
+            self.get_queryset()
+                .filter(is_published=True)
+                .only('name')
+        )
+
+
 class Tag(AbstractModelWithSlug):
+    objects = TagManager()
+
     class Meta:
         verbose_name = 'тэг'
         verbose_name_plural = 'тэги'
@@ -30,7 +41,33 @@ class Category(AbstractModelWithSlug):
         verbose_name_plural = 'категории'
 
 
+class ItemManager(models.Manager):
+    def published(self):
+        return (
+            self.get_queryset()
+                .filter(
+                    is_published=True,
+                    category__is_published=True)
+                .select_related('category')
+                .prefetch_related(
+                    models.Prefetch('tags', queryset=Tag.objects.published())
+                )
+        )
+
+    def categories(self):
+        categories = dict()
+        for item in Item.objects.published().order_by('category__name'):
+            cat = item.category
+            if cat in categories:
+                categories[cat].append(item)
+            else:
+                categories[cat] = [item]
+        return categories
+
+
 class Item(AbstractModel):
+    objects = ItemManager()
+
     category = models.ForeignKey(
         Category,
         verbose_name='категория',
@@ -49,10 +86,15 @@ class Item(AbstractModel):
         help_text='Описание предмета. Должны быть слова "превосходно"'
                   ' или "роскошно".',
     )
+    is_on_main = models.BooleanField(
+        'В главной?',
+        default=False,
+    )
 
     class Meta:
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
+        ordering = ('name',)
 
 
 class Photo(models.Model):

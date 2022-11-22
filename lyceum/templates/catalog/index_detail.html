@@ -5,14 +5,16 @@
 {% block content %}
     <h1>Подробнее про {{ item.name }}</h1>
 
-    <h2 class="name_cells">{{ item.name }}</h2>
-    <div class="card-body">
-        <p class="card-text">Название: <b>{{ item.name }}</b></p>
-        <p class="card-text">Категория: <b>{{ item.category.name }}</b></p>
-        <p class="card-text">Описание: {{ item.text|safe }}</p>
-        {% for image in photos %}
-            <img src="{{ image.image.url }}" alt="connect" style="height:300px">
+    <p>Название: <b>{{ item.name }}</b></p>
+    <p>Категория: <b>{{ item.category.name }}</b></p>
+    <p>Описание: {{ item.text|safe }}</p>
+    <p>Тэги:
+        {% for tag in item.tags.all %}
+            '{{ tag.name }}'
         {% endfor %}
-    </div>
+    </p>
 
+    {% for image in photos %}
+        <img src="{{ image.image.url }}" alt="connect" style="height:300px">
+    {% endfor %}
 {% endblock  %}

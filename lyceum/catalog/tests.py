@@ -1,5 +1,6 @@
 from django.test import Client, TestCase
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 
 from .models import Category, Tag, Item
 
@@ -7,7 +8,7 @@ from .models import Category, Tag, Item
 class StaticURLTests(TestCase):
     def test_catalog_endpoint(self):
         # Делаем запрос к каталогу и проверяем статус
-        response = Client().get('/catalog/')
+        response = Client().get(reverse('catalog:item_list'))
         self.assertEqual(response.status_code, 200)
 
 
@@ -29,15 +30,19 @@ class RegularExpressionsTests(TestCase):
     def test_catalog_pk_true_endpoint(self):
         # Делаем запрос к каталогу по целому числу
         # И проверяем статусы
-        test_item = Item(pk=123, name='test',
-                         is_published=True,
-                         category=self.category,
-                         text='Превосходно',
-                         )
+        test_item = Item(
+            pk=123,
+            name='test',
+            is_published=True,
+            category=self.category,
+            text='Превосходно',
+        )
         test_item.full_clean()
         test_item.save()
-        response = Client().get('/catalog/123/')
+        response = Client().get(reverse('catalog:item_detail', args=[123]))
         self.assertEqual(response.status_code, 200)
+        response = Client().get(reverse('catalog:item_detail', args=[1]))
+        self.assertEqual(response.status_code, 404)
 
     def test_catalog_pk_true_endpoint_2(self):
         test_item = Item(pk=1, name='test',
@@ -47,22 +52,22 @@ class RegularExpressionsTests(TestCase):
                          )
         test_item.full_clean()
         test_item.save()
-        response = Client().get('/catalog/1/')
+        response = Client().get(reverse('catalog:item_detail', args=[1]))
         self.assertEqual(response.status_code, 200)
 
     # Неправильные запросы
     def test_catalog_pk_false_endpoint(self):
-        response = Client().get('/catalog/abc/')
+        response = Client().get('catalog/abc')
         self.assertEqual(response.status_code, 404)
 
         # т.к. ноль - не положительное, ответ должен быть 404
-        response = Client().get('/catalog/0/')
+        response = Client().get('catalog/0')
         self.assertEqual(response.status_code, 404)
 
-        response = Client().get('/catalog/-1/')
+        response = Client().get('catalog/-1')
         self.assertEqual(response.status_code, 404)
 
-        response = Client().get('/catalog/123abc/')
+        response = Client().get('catalog/123abc')
         self.assertEqual(response.status_code, 404)
 
 
@@ -137,11 +142,16 @@ class ItemTest(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.category = Category.objects.create(name='Test Category',
-                                               slug='test-category-slug',
-                                               is_published=True, weight=50)
-        cls.tag = Tag.objects.create(name='Test tag', is_published=True,
-                                     slug='test-tag-slug')
+        cls.category = Category.objects.create(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True, weight=50
+        )
+        cls.tag = Tag.objects.create(
+            name='Test tag',
+            is_published=True,
+            slug='test-tag-slug'
+        )
 
     def tearDown(self):
         Item.objects.all().delete()
@@ -155,10 +165,12 @@ class ItemTest(TestCase):
         item_count = Item.objects.count()
 
         with self.assertRaises(ValidationError):
-            self.item = Item(name='Test item',
-                             is_published=True,
-                             category=self.category,
-                             text='tut net prevoshodno')
+            self.item = Item(
+                name='Test item',
+                is_published=True,
+                category=self.category,
+                text='tut net prevoshodno'
+            )
             self.item.full_clean()
             self.item.save()
             self.item.tags.add(self.tag)
@@ -169,10 +181,12 @@ class ItemTest(TestCase):
     def test_have_first_word(self):
         item_count = Item.objects.count()
 
-        self.item = Item(name='Test item #1',
-                         is_published=True,
-                         category=self.category,
-                         text='tut est Превосходно')
+        self.item = Item(
+            name='Test item #1',
+            is_published=True,
+            category=self.category,
+            text='tut est Превосходно'
+        )
         self.item.full_clean()
         self.item.save()
         # Количества объектов до и после должны различаться на 1
@@ -181,10 +195,12 @@ class ItemTest(TestCase):
     # Тест предмета, если в описании есть слово роскошно
     def test_have_second_word(self):
         item_count = Item.objects.count()
-        self.item = Item(name='Test item#2',
-                         is_published=True,
-                         category=self.category,
-                         text='tut est роскошно')
+        self.item = Item(
+            name='Test item#2',
+            is_published=True,
+            category=self.category,
+            text='tut est роскошно'
+        )
         self.item.full_clean()
         self.item.save()
         self.assertEqual(Item.objects.count(), item_count + 1)
@@ -193,10 +209,12 @@ class ItemTest(TestCase):
     def test_have_two_word(self):
         item_count = Item.objects.count()
 
-        self.item = Item(name='Test item#3',
-                         is_published=True,
-                         category=self.category,
-                         text='tut est роскошно и превосходно')
+        self.item = Item(
+            name='Test item#3',
+            is_published=True,
+            category=self.category,
+            text='tut est роскошно и превосходно'
+        )
         self.item.full_clean()
         self.item.save()
         self.assertEqual(Item.objects.count(), item_count + 1)
@@ -204,10 +222,47 @@ class ItemTest(TestCase):
     def test_have_word_and_punct(self):
         item_count = Item.objects.count()
 
-        self.item = Item(name='Test item#3',
-                         is_published=True,
-                         category=self.category,
-                         text='tut est роскошно!')
+        self.item = Item(
+            name='Test item#3',
+            is_published=True,
+            category=self.category,
+            text='tut est роскошно!'
+        )
         self.item.full_clean()
         self.item.save()
         self.assertEqual(Item.objects.count(), item_count + 1)
+
+
+class ItemListTest(TestCase):
+    def tearDown(self):
+        Item.objects.all().delete()
+        super().tearDown()
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        cls.category = Category.objects.create(name='Test Category',
+                                               slug='test-category-slug',
+                                               is_published=True, weight=50)
+        cls.tag = Tag.objects.create(name='Test tag', is_published=True,
+                                     slug='test-tag-slug')
+
+    def test_list_show_correct_content(self):
+        response = Client().get(reverse('catalog:item_list'))
+        self.assertIn('categories', response.context)
+        self.assertEqual(len(response.context['categories']), 0)
+
+    def test_list_with_object_show_correct_content(self):
+        test_item = Item(
+            name='test',
+            is_published=True,
+            category=self.category,
+            text='Превосходно',
+            is_on_main=True,
+        )
+        test_item.full_clean()
+        test_item.save()
+
+        response = Client().get(reverse('catalog:item_list'))
+        self.assertIn('categories', response.context)
+        self.assertEqual(len(response.context['categories']), 1)
