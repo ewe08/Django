@@ -5,14 +5,7 @@ from .models import Item, Photo
 
 def item_list(request):
     template = 'catalog/index_list.html'
-    categories = dict()
-    for item in Item.objects.published().order_by('category__name'):
-        cat = item.category
-        if cat in categories:
-            categories[cat].append(item)
-        else:
-            categories[cat] = [item]
-
+    categories = Item.objects.categories()
     context = {
         'title': 'Список',
         'categories': categories,

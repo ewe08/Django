@@ -54,6 +54,16 @@ class ItemManager(models.Manager):
                 )
         )
 
+    def categories(self):
+        categories = dict()
+        for item in Item.objects.published().order_by('category__name'):
+            cat = item.category
+            if cat in categories:
+                categories[cat].append(item)
+            else:
+                categories[cat] = [item]
+        return categories
+
 
 class Item(AbstractModel):
     objects = ItemManager()
