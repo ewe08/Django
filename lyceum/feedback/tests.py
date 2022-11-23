@@ -42,3 +42,20 @@ class FormTests(TestCase):
             follow=True,
         )
         self.assertEqual(Feedback.objects.count(), feedbacks_count + 1)
+
+    def test_form_show_correct(self):
+        response = Client().get(reverse('feedback:feedback'))
+
+        self.assertIn(
+            'form',
+            response.context
+        )
+
+        self.assertEqual(
+            response.context['form']['text'].label, 'Текст'
+        )
+
+        self.assertEqual(
+            response.context['form']['text'].help_text,
+            'Сюды текст надо для письма'
+        )
