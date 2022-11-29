@@ -27,22 +27,24 @@ INTERNAL_IPS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'homepage.apps.HomepageConfig',
-    'catalog.apps.CatalogConfig',
-    'about.apps.AboutConfig',
-    'feedback.apps.FeedbackConfig',
-
-    'sorl.thumbnail',
-    'django_cleanup.apps.CleanupConfig',
-    'tinymce',
-    'debug_toolbar',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'homepage.apps.HomepageConfig',
+    'catalog.apps.CatalogConfig',
+    'about.apps.AboutConfig',
+    'feedback.apps.FeedbackConfig',
+    'users.apps.UsersConfig',
+
+    'sorl.thumbnail',
+    'django_cleanup.apps.CleanupConfig',
+    'tinymce',
+    'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,6 @@ MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+LOGIN_REDIRECT_URL = 'homepage:home'

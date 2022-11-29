@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include "includes/fields.html" %}
+<a href={% url 'users:password_reset' %}>Забыли пароль?</a>
+{% endblock content %}
