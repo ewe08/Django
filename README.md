@@ -29,4 +29,5 @@ python manage.py runserver
 ```
 Для просмотра по умолчанию переходим на: http://127.0.0.1:8000/ или http://localhost:8000/
 ## База данных
-![изображение](https://user-images.githubusercontent.com/56339316/199190666-92eb09a1-89a9-4b11-b955-b6df7c5173d1.png)
+
+![image](https://user-images.githubusercontent.com/56339316/204703954-f48cc8a5-c999-4720-9b03-3a83c6ebce4a.png)
