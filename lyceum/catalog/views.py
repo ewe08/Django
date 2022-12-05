@@ -26,11 +26,16 @@ def item_detail(request, pk: int):
         pk=pk,
     )
 
-    rating = Rating.objects.filter(item=item, user=request.user).first()
+    if request.user.is_authenticated:
+        rating = Rating.objects.filter(item=item, user=request.user).first()
+    else:
+        rating = None
+
     if rating:
         user_rating = rating.rate
     else:
         user_rating = None
+
     count = Rating.objects.filter(item=pk).count()
     average_rating = Rating.objects.filter(item=pk).aggregate(Avg('rate'))['rate__avg']
     form = RatingForm(request.POST or None, instance=rating)
