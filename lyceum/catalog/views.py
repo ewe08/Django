@@ -1,26 +1,35 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView
 
 from .models import Item, Photo
 
 
-def item_list(request):
-    template = 'catalog/index_list.html'
-    categories = Item.objects.categories()
-    context = {
-        'title': 'Список',
-        'categories': categories,
-    }
+class ItemList(ListView):
+    model = Item
+    template_name = 'catalog/index_list.html'
 
-    return render(request, template, context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        categories = Item.objects.categories()
+        return {
+            'title': 'Список',
+            'categories': categories,
+        }
 
 
-def item_detail(request, pk: int):
-    template = 'catalog/index_detail.html'
-    item = get_object_or_404(
-        Item.objects.published(),
-        pk=pk,
-    )
-    context = {'title': 'Подробнее',
-               'item': item,
-               'photos': Photo.objects.filter(item_galery=pk)}
-    return render(request, template, context)
+class ItemDetail(DetailView):
+    model = Item
+    template_name = 'catalog/index_detail.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            Item.objects.published(),
+            pk=self.kwargs['pk']
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['title'] = 'Подробнее'
+        context['photos'] = Photo.objects.filter(
+            item_galery=context['item'].id
+        )
+        return context
