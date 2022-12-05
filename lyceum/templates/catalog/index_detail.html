@@ -17,4 +17,14 @@
     {% for image in photos %}
         <img src="{{ image.image.url }}" alt="connect" style="height:300px">
     {% endfor %}
+    <p>{% if average_rating %} Средняя оценка: {{ average_rating }} {% endif %}</p>
+    <p>{% if rating_count %} Всего оценок: {{ rating_count }} {% endif %}</p>
+    {% if user and user.is_authenticated %}
+        {% if user_rating %}
+            <p>Ваша оценка: {{ user_rating }}</p>
+        {% else %}
+            <p>Вы ещё не оценили данный товар</p>
+        {% endif %}
+        {% include "includes/fields.html" %}
+    {% endif %}
 {% endblock  %}

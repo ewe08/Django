@@ -9,6 +9,6 @@ urlpatterns = [
     path('', views.ItemList.as_view(), name='item_list'),
 
     # Целое положительное число большее 0
-    re_path(r'^(?P<pk>[1-9]*)/$', views.ItemDetail.as_view(),
+    re_path(r'^(?P<pk>[1-9]*)/$', views.item_detail,
             name='item_detail'),
 ]

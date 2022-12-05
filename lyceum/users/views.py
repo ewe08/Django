@@ -1,11 +1,11 @@
-from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView, \
-     PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
-     PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+    PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
+    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.urls import reverse_lazy
 from django.views import generic
 
-from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import CustomUser
 
 
 class LoginView(LoginView):
