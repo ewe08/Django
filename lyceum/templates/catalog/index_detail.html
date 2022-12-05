@@ -21,7 +21,7 @@
     <p>{% if rating_count %} Всего оценок: {{ rating_count }} {% endif %}</p>
     {% if user and user.is_authenticated %}
         {% if user_rating %}
-            <p>Ваша оценка {{ user_rating }}</p>
+            <p>Ваша оценка: {{ user_rating }}</p>
         {% else %}
             <p>Вы ещё не оценили данный товар</p>
         {% endif %}
