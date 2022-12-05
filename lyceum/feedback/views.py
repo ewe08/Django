@@ -1,5 +1,4 @@
 from django.core.mail import send_mail
-from django.shortcuts import reverse
 from django.views.generic import FormView
 
 from .forms import FeedbackForm

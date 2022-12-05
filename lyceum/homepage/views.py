@@ -1,8 +1,6 @@
-import pprint
-
-from django.shortcuts import render
-from catalog.models import Item
 from django.views.generic import ListView
+
+from catalog.models import Item
 
 
 class HomeView(ListView):

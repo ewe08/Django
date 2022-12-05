@@ -6,7 +6,6 @@ from .views import LoginView, LogoutView, \
     PasswordResetCompleteView, SignUpView, ProfileView, \
     ProfileEditView, UsersList
 
-
 app_name = 'users'
 urlpatterns = [
     path('login/',
