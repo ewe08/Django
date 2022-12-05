@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Raiting
+from .models import Rating
 
-admin.site.register(Raiting)
+admin.site.register(Rating)

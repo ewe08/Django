@@ -5,7 +5,7 @@ from catalog.models import Item
 from users.models import CustomUser
 
 
-class Raiting(models.Model):
+class Rating(models.Model):
     choices = [
         ('1', 'Ненависть'),
         ('2', 'Неприязнь'),
