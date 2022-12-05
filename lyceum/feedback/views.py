@@ -1,15 +1,16 @@
-from django.shortcuts import render, redirect
 from django.core.mail import send_mail
+from django.views.generic import FormView
 
 from .forms import FeedbackForm
 from .models import Feedback
 
 
-def feedback(request):
-    template = 'feedback/feedback.html'
-    form = FeedbackForm(request.POST or None)
+class FeedbackView(FormView):
+    template_name = 'feedback/feedback.html'
+    form_class = FeedbackForm
+    success_url = '/feedback/'
 
-    if request.method == 'POST' and form.is_valid():
+    def form_valid(self, form):
         text = form.cleaned_data['text']
         Feedback.objects.create(
             text=text,
@@ -21,11 +22,10 @@ def feedback(request):
             ['to@example.com'],
             fail_silently=False,
         )
+        return super().form_valid(form)
 
-        return redirect('feedback:feedback')
-
-    context = {
-        'title': 'Фидбэк',
-        'form': form
-    }
-    return render(request, template, context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['title'] = 'Фидбэк'
+        context['form'] = self.get_form()
+        return context
