@@ -20,27 +20,6 @@ class ItemList(ListView):
             'categories': categories,
         }
 
-    return render(request, template, context)
-
-
-class ItemDetail(DetailView):
-    model = Item
-    template_name = 'catalog/index_detail.html'
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(
-            Item.objects.published(),
-            pk=self.kwargs['pk']
-        )
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['title'] = 'Подробнее'
-        context['photos'] = Photo.objects.filter(
-            item_galery=context['item'].id
-        )
-        return context
-
 
 def item_detail(request, pk: int):
     template = 'catalog/index_detail.html'
@@ -86,3 +65,22 @@ def item_detail(request, pk: int):
         return redirect(reverse('catalog:item_detail', args=[pk]))
 
     return render(request, template, context)
+
+
+class ItemDetail(DetailView):
+    model = Item
+    template_name = 'catalog/index_detail.html'
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            Item.objects.published(),
+            pk=self.kwargs['pk']
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['title'] = 'Подробнее'
+        context['photos'] = Photo.objects.filter(
+            item_galery=context['item'].id
+        )
+        return context
