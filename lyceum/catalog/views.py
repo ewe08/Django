@@ -40,13 +40,13 @@ def item_detail(request, pk: int):
         user_rating = None
 
     count = Rating.objects.filter(item=pk).count()
-    average_rating = Rating.objects.filter(item=pk).aggregate(Avg('rate'))['rate__avg']
+    average_rating = Rating.objects.filter(item=pk).aggregate(Avg('rate'))
     form = RatingForm(request.POST or None, instance=rating)
     context = {'title': 'Подробнее',
                'item': item,
                'photos': Photo.objects.filter(item_galery=pk),
                'rating_count': count,
-               'average_rating': average_rating,
+               'average_rating': average_rating['rate__avg'],
                'btn_label': 'Отправить',
                'user_rating': user_rating,
                'form': form}
