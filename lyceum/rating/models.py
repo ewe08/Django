@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 
 from catalog.models import Item
 from users.models import CustomUser
@@ -34,3 +35,6 @@ class Raiting(models.Model):
     class Meta:
         verbose_name = 'рейтинг'
         verbose_name_plural = 'рейтинги'
+        constraints = [
+            UniqueConstraint(fields=['user', 'rate'], name='rating_once')
+        ]
