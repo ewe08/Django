@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'feedback.apps.FeedbackConfig',
     'users.apps.UsersConfig',
     'rating.apps.RatingConfig',
+    'core.apps.CoreConfig',
 
     'sorl.thumbnail',
     'django_cleanup.apps.CleanupConfig',
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.birthday',
             ],
         },
     },
