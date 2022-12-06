@@ -15,10 +15,11 @@ SECRET_KEY = str(os.getenv('SECRET_KEY', default='unsafe-secret-key'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(os.getenv('DEBUG_MODE', default='True'))
 
-ALLOWED_HOSTS = json.loads(os.environ.get('ALLOWED_HOSTS', '["*"]'))
+ALLOWED_HOSTS = json.loads(
+    os.environ.get('ALLOWED_HOSTS', default='["*"]'))
 
 if DEBUG:
-    INTERNAL_IPS = json.loads(os.environ.get('INTERNAL_IPS', '[]'))
+    INTERNAL_IPS = json.loads(os.environ.get('INTERNAL_IPS', default='[]'))
 else:
     INTERNAL_IPS = []
 
@@ -156,7 +157,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-DEFAULT_FROM_EMAIL = str(os.environ.get('DEFAULT_FROM_EMAIL'))
+DEFAULT_FROM_EMAIL = str(os.environ.get(
+    'DEFAULT_FROM_EMAIL',
+    default='djangoLearning@support.com')
+)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
