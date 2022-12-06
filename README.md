@@ -46,9 +46,9 @@
         DEFAULT_FROM_EMAIL = 'djangoLearning@support.com'
         ```
     9. Выполняем миграции:<br> 
-    ```python manage.py makemigrations```</br>
-    ```python manage.py migrate```
-    10. Создадим админа: </br> ```python manage.py createsuperuser```   
+    ```python3 manage.py makemigrations```</br>
+    ```python3 manage.py migrate```
+    10. Создадим админа: </br> ```python3 manage.py createsuperuser```   
     11. ```python3 manage.py runserver```
     12. Поздавляю! Проект работает! 
 </br>
