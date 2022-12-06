@@ -3,6 +3,5 @@ venv
 .env
 __pycache__
 send_mail/
-media
 db.sqlite3
 .idea

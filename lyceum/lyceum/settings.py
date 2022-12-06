@@ -1,16 +1,13 @@
 import os
+import json
 from pathlib import Path
 
 from dotenv import load_dotenv
 
-load_dotenv()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+load_dotenv(BASE_DIR / '.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = str(os.getenv('SECRET_KEY', default='unsafe-secret-key'))
@@ -18,11 +15,13 @@ SECRET_KEY = str(os.getenv('SECRET_KEY', default='unsafe-secret-key'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(os.getenv('DEBUG_MODE', default='True'))
 
-ALLOWED_HOSTS = str(os.getenv('ALLOWED_HOSTS')).split()
+ALLOWED_HOSTS = json.loads(
+    os.environ.get('ALLOWED_HOSTS', default='["*"]'))
 
-INTERNAL_IPS = [
-    '127.0.0.1',
-]
+if DEBUG:
+    INTERNAL_IPS = json.loads(os.environ.get('INTERNAL_IPS', default='[]'))
+else:
+    INTERNAL_IPS = []
 
 # Application definition
 
@@ -158,6 +157,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
+DEFAULT_FROM_EMAIL = str(os.environ.get(
+    'DEFAULT_FROM_EMAIL',
+    default='djangoLearning@support.com')
+)
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
