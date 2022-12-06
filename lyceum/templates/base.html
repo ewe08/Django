@@ -22,6 +22,14 @@
     <div class="container">
         {% include "includes/header.html" %}
 
+        {% if birthday %}
+            {% for el in birthday %}
+                <div class="alert alert-success" role="alert">
+                    Поздравляем {{ el.first_name }}({{ el.email }})! С днем рождения!
+                </div>
+            {% endfor %}
+        {% endif %}
+
         <main>
             {% block content %}{% endblock %}
         </main>
