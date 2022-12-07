@@ -6,7 +6,9 @@ from .models import Feedback
 class FeedbackForm(forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = (Feedback.text.field.name, )
+        fields = (
+            Feedback.text.field.name,
+            )
         labels = {
-            'text': 'Текст'
+            Feedback.rate.field.name: 'Текст'
         }
