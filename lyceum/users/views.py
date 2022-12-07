@@ -1,6 +1,4 @@
-from django.contrib.auth.views import LoginView, LogoutView, \
-    PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth import views
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -8,7 +6,7 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser
 
 
-class LoginView(LoginView):
+class LoginView(views.LoginView):
     template_name = 'users/login.html'
 
     def get_context_data(self, **kwargs):
@@ -18,7 +16,7 @@ class LoginView(LoginView):
         return context
 
 
-class LogoutView(LogoutView):
+class LogoutView(views.LogoutView):
     template_name = 'users/logout.html'
 
     def get_context_data(self, **kwargs):
@@ -29,7 +27,7 @@ class LogoutView(LogoutView):
         return context
 
 
-class PasswordChangeDoneView(PasswordChangeDoneView):
+class PasswordChangeDoneView(views.PasswordChangeDoneView):
     template_name = 'users/password_change_done.html'
 
     def get_context_data(self, **kwargs):
@@ -42,7 +40,7 @@ class PasswordChangeDoneView(PasswordChangeDoneView):
         return context
 
 
-class PasswordChangeView(PasswordChangeView):
+class PasswordChangeView(views.PasswordChangeView):
     template_name = 'users/password_change.html'
     success_url = reverse_lazy('users:password_change_done')
 
@@ -53,7 +51,7 @@ class PasswordChangeView(PasswordChangeView):
         return context
 
 
-class PasswordResetDoneView(PasswordResetDoneView):
+class PasswordResetDoneView(views.PasswordResetDoneView):
     template_name = 'users/password_reset_done.html'
 
     def get_context_data(self, **kwargs):
@@ -64,7 +62,7 @@ class PasswordResetDoneView(PasswordResetDoneView):
         return context
 
 
-class PasswordResetConfirmView(PasswordResetConfirmView):
+class PasswordResetConfirmView(views.PasswordResetConfirmView):
     template_name = 'users/password_reset_confirm.html'
     success_url = reverse_lazy('users:password_reset_complete')
 
@@ -77,7 +75,7 @@ class PasswordResetConfirmView(PasswordResetConfirmView):
         return context
 
 
-class PasswordResetCompleteView(PasswordResetCompleteView):
+class PasswordResetCompleteView(views.PasswordResetCompleteView):
     template_name = 'users/password_reset_complete.html'
 
     def get_context_data(self, **kwargs):
@@ -90,7 +88,7 @@ class PasswordResetCompleteView(PasswordResetCompleteView):
         return context
 
 
-class PasswordResetView(PasswordResetView):
+class PasswordResetView(views.PasswordResetView):
     template_name = 'users/password_reset.html'
     email_template_name = 'users/password_reset_email.html'
     success_url = reverse_lazy('users:password_reset_done')
