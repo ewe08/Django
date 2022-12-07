@@ -77,7 +77,7 @@ class Item(AbstractModel):
     tags = models.ManyToManyField(
         Tag,
         verbose_name='тэги',
-        help_text='теги. Связь m2m.'
+        help_text='Теги. Связь m2m.'
     )
     text = HTMLField(
         'описание',
@@ -114,7 +114,7 @@ class Photo(models.Model):
         Item,
         verbose_name='галерея фотографий',
         on_delete=models.CASCADE,
-        help_text='фотографии предмета.',
+        help_text='Фотографии предмета.',
         related_name='item_galery',
         null=True,
         blank=True
