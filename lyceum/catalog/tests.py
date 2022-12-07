@@ -31,7 +31,7 @@ class RegularExpressionsTests(TestCase):
         # Делаем запрос к каталогу по целому числу
         # И проверяем статусы
         test_item = Item(
-            pk=123,
+            pk=10,
             name='test',
             is_published=True,
             category=self.category,
@@ -39,7 +39,7 @@ class RegularExpressionsTests(TestCase):
         )
         test_item.full_clean()
         test_item.save()
-        response = Client().get(reverse('catalog:item_detail', args=[123]))
+        response = Client().get(reverse('catalog:item_detail', args=[10]))
         self.assertEqual(response.status_code, 200)
         response = Client().get(reverse('catalog:item_detail', args=[1]))
         self.assertEqual(response.status_code, 404)

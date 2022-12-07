@@ -8,7 +8,7 @@ class FeedbackForm(forms.ModelForm):
         model = Feedback
         fields = (
             Feedback.text.field.name,
-            )
+        )
         labels = {
-            Feedback.rate.field.name: 'Текст'
+            Feedback.text.field.name: 'Текст'
         }
