@@ -25,6 +25,13 @@ class AbstractModel(models.Model):
 
 
 class AbstractModelWithSlug(AbstractModel):
+    name = models.CharField(
+        'название',
+        max_length=150,
+        help_text='Название.',
+        unique=True
+    )
+
     slug = models.SlugField(
         max_length=200,
         unique=True,
