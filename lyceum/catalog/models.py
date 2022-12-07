@@ -72,12 +72,14 @@ class Item(AbstractModel):
         Category,
         verbose_name='категория',
         on_delete=models.CASCADE,
-        help_text='Категория. Связь o2m.'
+        help_text='Категория. Связь o2m.',
+        related_name='category'
     )
     tags = models.ManyToManyField(
         Tag,
         verbose_name='тэги',
-        help_text='Теги. Связь m2m.'
+        help_text='Теги. Связь m2m.',
+        related_name='tags'
     )
     text = HTMLField(
         'описание',
@@ -108,6 +110,7 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
+        related_name='item_main'
     )
 
     item_galery = models.ForeignKey(
