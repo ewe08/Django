@@ -1,15 +1,7 @@
 from django.db import models
 
-# Абстрактные классы для будущего наследования
 
-
-class AbstractModel(models.Model):
-    is_published = models.BooleanField(
-        'опубликовано',
-        default=True,
-        help_text='Проверка на публикацю.'
-    )
-
+class NamedBaseModel(models.Model):
     name = models.CharField(
         'название',
         max_length=150,
@@ -23,7 +15,18 @@ class AbstractModel(models.Model):
         abstract = True
 
 
-class AbstractModelWithSlug(AbstractModel):
+class PublishedBaseModel(models.Model):
+    is_published = models.BooleanField(
+        'опубликовано',
+        default=True,
+        help_text='Проверка на публикацю.'
+    )
+
+    class Meta:
+        abstract = True
+
+
+class SluggedBaseModel(models.Model):
     slug = models.SlugField(
         max_length=200,
         unique=True,

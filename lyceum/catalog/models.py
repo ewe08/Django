@@ -5,7 +5,7 @@ from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
 from .validators import validate_must_be_param
-from core.models import AbstractModel, AbstractModelWithSlug
+from core.models import NamedBaseModel, PublishedBaseModel, SluggedBaseModel
 
 
 class TagManager(models.Manager):
@@ -17,7 +17,7 @@ class TagManager(models.Manager):
         )
 
 
-class Tag(AbstractModelWithSlug):
+class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     objects = TagManager()
 
     class Meta:
@@ -25,7 +25,7 @@ class Tag(AbstractModelWithSlug):
         verbose_name_plural = 'тэги'
 
 
-class Category(AbstractModelWithSlug):
+class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     weight = models.PositiveSmallIntegerField(
             'вес',
             default=100,
@@ -65,7 +65,7 @@ class ItemManager(models.Manager):
         return categories
 
 
-class Item(AbstractModel):
+class Item(NamedBaseModel, PublishedBaseModel):
     objects = ItemManager()
 
     category = models.ForeignKey(
