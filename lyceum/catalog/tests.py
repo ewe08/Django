@@ -57,17 +57,17 @@ class RegularExpressionsTests(TestCase):
 
     # Неправильные запросы
     def test_catalog_pk_false_endpoint(self):
-        response = Client().get('catalog/abc')
+        response = Client().get(reverse('catalog:item_detail', args=['abc']))
         self.assertEqual(response.status_code, 404)
 
         # т.к. ноль - не положительное, ответ должен быть 404
-        response = Client().get('catalog/0')
+        response = Client().get(reverse('catalog:item_detail', args=[0]))
         self.assertEqual(response.status_code, 404)
 
-        response = Client().get('catalog/-1')
+        response = Client().get(reverse('catalog:item_detail', args=[-1]))
         self.assertEqual(response.status_code, 404)
 
-        response = Client().get('catalog/123abc')
+        response = Client().get(reverse('catalog:item_detail', args=['123abc']))
         self.assertEqual(response.status_code, 404)
 
 
