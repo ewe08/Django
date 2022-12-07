@@ -7,7 +7,7 @@ class AbstractModel(models.Model):
     is_published = models.BooleanField(
         'опубликовано',
         default=True,
-        help_text='Проверка на публикацю.'
+        help_text='Проверка на публикацию.'
     )
 
     name = models.CharField(

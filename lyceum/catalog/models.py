@@ -33,7 +33,7 @@ class Category(AbstractModelWithSlug):
                 MinValueValidator(0),
                 MaxValueValidator(32767)
             ],
-            help_text='Вес, должен быть 0 до 32767.'
+            help_text='Вес, должен быть от 0 до 32767.'
     )
 
     class Meta:
@@ -87,7 +87,7 @@ class Item(AbstractModel):
                   ' или "роскошно".',
     )
     is_on_main = models.BooleanField(
-        'В главной?',
+        'На главной?',
         default=False,
     )
 
