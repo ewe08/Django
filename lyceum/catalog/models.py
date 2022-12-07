@@ -1,12 +1,12 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.core.validators import MinValueValidator, MaxValueValidator
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
+from core.models import AbstractModel, AbstractModelWithSlug
 from .managers import ItemManager
 from .validators import validate_must_be_param
-from core.models import AbstractModel, AbstractModelWithSlug
 
 
 class TagManager(models.Manager):
