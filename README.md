@@ -1,4 +1,7 @@
 # Django
+![project workflow](https://github.com/ewe08/Django/actions/workflows/python-package.yml/badge.svg)
+![project workflow](https://github.com/ewe08/Django/actions/workflows/django.yml/badge.svg)
+
 ### Инструкция по запуску:
 Для клонирования (Скачаивания проекта) себе на компьютер:
 
