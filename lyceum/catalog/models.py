@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
+from .managers import ItemManager
 from .validators import validate_must_be_param
 from core.models import AbstractModel, AbstractModelWithSlug
 
@@ -39,30 +40,6 @@ class Category(AbstractModelWithSlug):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
-
-
-class ItemManager(models.Manager):
-    def published(self):
-        return (
-            self.get_queryset()
-                .filter(
-                    is_published=True,
-                    category__is_published=True)
-                .select_related('category')
-                .prefetch_related(
-                    models.Prefetch('tags', queryset=Tag.objects.published())
-                )
-        )
-
-    def categories(self):
-        categories = dict()
-        for item in Item.objects.published().order_by('category__name'):
-            cat = item.category
-            if cat in categories:
-                categories[cat].append(item)
-            else:
-                categories[cat] = [item]
-        return categories
 
 
 class Item(AbstractModel):
