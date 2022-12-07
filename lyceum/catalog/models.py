@@ -66,8 +66,6 @@ class ItemManager(models.Manager):
 
 
 class Item(AbstractModel):
-    objects = ItemManager()
-
     category = models.ForeignKey(
         Category,
         verbose_name='категория',
@@ -92,6 +90,8 @@ class Item(AbstractModel):
         'В главной?',
         default=False,
     )
+
+    objects = ItemManager()
 
     class Meta:
         verbose_name = 'товар'
@@ -123,6 +123,13 @@ class Photo(models.Model):
         blank=True
     )
 
+    class Meta:
+        verbose_name = 'фото'
+        verbose_name_plural = 'фотографии'
+
+    def __str__(self):
+        return self.image.name
+
     @property
     def get_img(self):
         return get_thumbnail(
@@ -140,10 +147,3 @@ class Photo(models.Model):
 
     image_tmb.short_description = 'превью'
     image_tmb.allow_tags = True
-
-    def __str__(self):
-        return self.image.name
-
-    class Meta:
-        verbose_name = 'фото'
-        verbose_name_plural = 'фотографии'

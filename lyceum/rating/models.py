@@ -31,12 +31,12 @@ class Rating(models.Model):
         choices=choices,
     )
 
-    def __str__(self):
-        return f'{self.rate} - {self.item.name} - {self.user.email}'
-
     class Meta:
         verbose_name = 'рейтинг'
         verbose_name_plural = 'рейтинги'
         constraints = [
             UniqueConstraint(fields=['user', 'rate'], name='rating_once')
         ]
+
+    def __str__(self):
+        return f'{self.rate} - {self.item.name} - {self.user.email}'

@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Абстрактные классы для будущего наследования
 
 
@@ -16,11 +17,11 @@ class AbstractModel(models.Model):
         help_text='Название.'
     )
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.name
 
 
 class AbstractModelWithSlug(AbstractModel):
