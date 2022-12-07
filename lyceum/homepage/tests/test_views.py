@@ -4,13 +4,6 @@ from django.urls import reverse
 from catalog.models import Category, Tag, Item
 
 
-class StaticURLTests(TestCase):
-    def test_homepage_endpoint(self):
-        # Делаем запрос к главной странице и проверяем статус
-        response = Client().get(reverse('homepage:home'))
-        self.assertEqual(response.status_code, 200)
-
-
 class TaskPagesTests(TestCase):
     def tearDown(self):
         Item.objects.all().delete()
