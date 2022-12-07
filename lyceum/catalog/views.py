@@ -13,12 +13,14 @@ class ItemList(ListView):
     model = Item
     template_name = 'catalog/index_list.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        categories = Item.objects.categories()
-        return {
-            'title': 'Список',
-            'categories': categories,
-        }
+    def get_queryset(self):
+        queryset = Item.objects.categories()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список'
+        return context
 
 
 class ItemDetail(DetailView):
@@ -37,16 +39,9 @@ class ItemDetail(DetailView):
         context['photos'] = Photo.objects.filter(
             item_galery=context['item'].id
         )
-
-        if self.request.user.is_authenticated:
-            rating = Rating.objects.filter(item=self.object,
-                                           user=self.request.user).first()
-        else:
-            rating = None
-        if rating:
-            user_rating = rating.rate
-        else:
-            user_rating = False
+        rating = Rating.objects.filter(item=self.object,
+                                       user=self.request.user.id).first()
+        user_rating = rating.rate if rating else None
         count = Rating.objects.filter(item=self.kwargs['pk']).count()
         average_rating = Rating.objects.filter(
             item=self.kwargs['pk']
@@ -64,11 +59,8 @@ class ItemDetail(DetailView):
             return redirect(reverse('catalog:item_detail',
                                     args=[self.kwargs['pk']]))
         item = self.get_object()
-        if request.user.is_authenticated:
-            rating = Rating.objects.filter(item=item,
-                                           user=request.user).first()
-        else:
-            rating = None
+        rating = Rating.objects.filter(item=item,
+                                       user=request.user.id).first()
         if rating:
             rating.rate = form.cleaned_data['rate']
         else:
