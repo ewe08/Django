@@ -41,6 +41,8 @@ class BirthdayTests(TestCase):
         self.assertEqual(len(response.context['birthday']), 0)
 
     def test_many_birthdays(self):
+        start_birthdays = len(CustomUser.objects.filter(
+            birthday=dt.date.today()))
         for i in range(1, 4):
             new_user = CustomUser(
                 email=f'test{i}@test.com',
@@ -50,4 +52,5 @@ class BirthdayTests(TestCase):
             new_user.full_clean()
             new_user.save()
         response = Client().get(reverse('homepage:home'))
-        self.assertEqual(len(response.context['birthday']), 3)
+        self.assertEqual(len(response.context['birthday']),
+                         start_birthdays + 3)
