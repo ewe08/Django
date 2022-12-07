@@ -1,10 +1,10 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.core.validators import MinValueValidator, MaxValueValidator
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
-from .validators import validate_must_be_param
+from catalog.validators import validate_must_be_param
 from core.models import AbstractModel, AbstractModelWithSlug
 
 
@@ -12,8 +12,8 @@ class TagManager(models.Manager):
     def published(self):
         return (
             self.get_queryset()
-                .filter(is_published=True)
-                .only('name')
+            .filter(is_published=True)
+            .only('name')
         )
 
 
@@ -27,13 +27,13 @@ class Tag(AbstractModelWithSlug):
 
 class Category(AbstractModelWithSlug):
     weight = models.PositiveSmallIntegerField(
-            'вес',
-            default=100,
-            validators=[
-                MinValueValidator(0),
-                MaxValueValidator(32767)
-            ],
-            help_text='Вес, должен быть 0 до 32767.'
+        'вес',
+        default=100,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(32767)
+        ],
+        help_text='Вес, должен быть 0 до 32767.'
     )
 
     class Meta:
@@ -45,13 +45,13 @@ class ItemManager(models.Manager):
     def published(self):
         return (
             self.get_queryset()
-                .filter(
-                    is_published=True,
-                    category__is_published=True)
-                .select_related('category')
-                .prefetch_related(
-                    models.Prefetch('tags', queryset=Tag.objects.published())
-                )
+            .filter(
+                is_published=True,
+                category__is_published=True)
+            .select_related('category')
+            .prefetch_related(
+                models.Prefetch('tags', queryset=Tag.objects.published())
+            )
         )
 
     def categories(self):
@@ -133,6 +133,7 @@ class Photo(models.Model):
             return mark_safe(
                 f'<img src="{self.get_img.url}">'
             )
+        return None
 
     image_tmb.short_description = 'превью'
     image_tmb.allow_tags = True
