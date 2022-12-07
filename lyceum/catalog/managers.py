@@ -12,13 +12,18 @@ class ItemManager(models.Manager):
                     category__is_published=True)
                 .select_related('category')
                 .prefetch_related(
-                    models.Prefetch('tags', queryset=local_models.Tag.objects.published())
+                    models.Prefetch(
+                        'tags',
+                        queryset=local_models.Tag.objects.published(),
+                    )
                 )
         )
 
     def categories(self):
         categories = dict()
-        for item in local_models.Item.objects.published().order_by('category__name'):
+        for item in (local_models.Item.objects
+                     .published()
+                     .order_by('category__name')):
             cat = item.category
             if cat in categories:
                 categories[cat].append(item)
