@@ -1,7 +1,6 @@
 import datetime as dt
 
 from django.test import TestCase, Client
-# from django.core.exceptions import ValidationError
 from django.urls import reverse
 
 from users.models import CustomUser
