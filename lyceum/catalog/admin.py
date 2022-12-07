@@ -37,4 +37,4 @@ class ItemAdmin(admin.ModelAdmin):
     def show_image_preview(self, obj):
         return obj.photo.image_tmb()
 
-    show_image_preview.short_description = u'Изображение'
+    show_image_preview.short_description = 'Изображение'
