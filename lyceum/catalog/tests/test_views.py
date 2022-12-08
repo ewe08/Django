@@ -5,7 +5,7 @@ from catalog.models import Category, Item, Tag
 
 
 class ItemListTest(TestCase):
-    """Test item list response content"""
+    """Test item list on catalog response content"""
 
     def tearDown(self):
         Item.objects.all().delete()
