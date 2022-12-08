@@ -2,6 +2,8 @@ from django.db import models
 
 
 class NamedBaseModel(models.Model):
+    """Abstract model with name field."""
+
     name = models.CharField(
         'название',
         max_length=150,
@@ -16,6 +18,8 @@ class NamedBaseModel(models.Model):
 
 
 class UniqueNamedBaseModel(models.Model):
+    """Abstract model with unique name field."""
+
     name = models.CharField(
         'название',
         unique=True,
@@ -31,6 +35,8 @@ class UniqueNamedBaseModel(models.Model):
 
 
 class PublishedBaseModel(models.Model):
+    """Abstract model with is_published field."""
+
     is_published = models.BooleanField(
         'опубликовано',
         default=True,
@@ -42,6 +48,8 @@ class PublishedBaseModel(models.Model):
 
 
 class SluggedBaseModel(models.Model):
+    """Abstract model with slug field."""
+
     slug = models.SlugField(
         max_length=200,
         unique=True,

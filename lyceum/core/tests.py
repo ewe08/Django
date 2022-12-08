@@ -8,11 +8,15 @@ from users.models import CustomUser
 
 
 class BirthdayTests(TestCase):
+    """Test context processor."""
+
     def tearDown(self):
         CustomUser.objects.all().delete()
         super().tearDown()
 
     def test_have_birthday(self):
+        """Test there is one user with birthday today."""
+
         custom_user = CustomUser(
             email=settings.TEST_USER_EMAIL,
             password='123',
@@ -29,6 +33,8 @@ class BirthdayTests(TestCase):
         )
 
     def test_havent_birthday(self):
+        """Test there is one user with birthday not today."""
+
         custom_user = CustomUser(
             email=settings.TEST_USER_EMAIL,
             password='123',
@@ -42,6 +48,8 @@ class BirthdayTests(TestCase):
         self.assertEqual(len(response.context['birthday']), 0)
 
     def test_many_birthdays(self):
+        """Test there are many users with birthday today."""
+
         start_birthdays = len(
             CustomUser.objects.filter(
                 birthday=dt.date.today(),
