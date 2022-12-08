@@ -6,6 +6,8 @@ from users.models import CustomUser
 
 
 class RainitgStatus(models.IntegerChoices):
+    """Class with rating statuses."""
+
     HATE = 1, 'Ненависть'
     DISLIKE = 2, 'Неприязнь'
     NEUTRAL = 3, 'Нейтрально'
@@ -14,6 +16,8 @@ class RainitgStatus(models.IntegerChoices):
 
 
 class Rating(models.Model):
+    """Rating model with item, user and rate field."""
+
     item = models.ForeignKey(
         Item,
         on_delete=models.CASCADE,
