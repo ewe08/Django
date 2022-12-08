@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 
 
 def validate_must_be_param(*args):
+    """Validator that checked that in text required word are."""
+
     @wraps(validate_must_be_param)
     def word_validate(value):
         must_be_in_our_item = set(args)

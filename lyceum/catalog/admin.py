@@ -8,6 +8,8 @@ admin.site.register(Photo)
 
 
 class MainPhoto(admin.TabularInline):
+    """Class for main photo by item"""
+
     model = Photo
     extra = 1
     fk_name = 'item_main'
@@ -15,6 +17,8 @@ class MainPhoto(admin.TabularInline):
 
 
 class GalleryInline(admin.TabularInline):
+    """Class for gallery admin panel."""
+
     model = Photo
     fk_name = 'item_galery'
     fields = ('image',)
@@ -22,6 +26,8 @@ class GalleryInline(admin.TabularInline):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
+    """Class for item admin panel."""
+
     list_display = (
         'name',
         'is_published',
@@ -36,6 +42,10 @@ class ItemAdmin(admin.ModelAdmin):
     )
 
     def show_image_preview(self, obj):
+        """
+        :param obj: Item object
+        :return: html tag with url to objects photo
+        """
         return obj.photo.image_tmb()
 
     show_image_preview.short_description = 'Изображение'

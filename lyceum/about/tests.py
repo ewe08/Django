@@ -7,5 +7,6 @@ class StaticURLTests(TestCase):
 
     def test_about_endpoint(self):
         """Test response status by correct response."""
+
         response = Client().get(reverse('about:about'))
         self.assertEqual(response.status_code, 200)
