@@ -9,8 +9,11 @@ class ItemManager(models.Manager):
             self.get_queryset()
                 .filter(
                     is_published=True,
-                    category__is_published=True)
-                .select_related('category')
+                    category__is_published=True,
+                    )
+                .select_related(
+                    'category',
+                    )
                 .prefetch_related(
                     models.Prefetch(
                         'tags',
@@ -35,3 +38,12 @@ class ItemManager(models.Manager):
         return (local_models.Item.objects.published()
                 .filter(is_on_main=True)
                 .order_by('name'))
+
+
+class TagManager(models.Manager):
+    def published(self):
+        return (
+            self.get_queryset()
+            .filter(is_published=True)
+            .only('name')
+        )

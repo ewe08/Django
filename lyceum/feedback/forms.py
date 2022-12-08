@@ -10,5 +10,5 @@ class FeedbackForm(forms.ModelForm):
             Feedback.text.field.name,
         )
         labels = {
-            Feedback.text.field.name: 'Текст'
+            Feedback.text.field.name: 'Текст',
         }

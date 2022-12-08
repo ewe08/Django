@@ -17,24 +17,27 @@ class Rating(models.Model):
     item = models.ForeignKey(
         Item,
         on_delete=models.CASCADE,
-        related_name='item'
+        related_name='item',
     )
 
     user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
-        related_name='user'
+        related_name='user',
     )
 
     rate = models.IntegerField(
-        choices=RainitgStatus.choices
+        choices=RainitgStatus.choices,
     )
 
     class Meta:
         verbose_name = 'рейтинг'
         verbose_name_plural = 'рейтинги'
         constraints = [
-            UniqueConstraint(fields=['user', 'rate'], name='rating_once')
+            UniqueConstraint(
+                fields=['user', 'rate'],
+                name='rating_once',
+            )
         ]
 
     def __str__(self):

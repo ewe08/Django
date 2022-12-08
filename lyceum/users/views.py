@@ -21,7 +21,10 @@ class LogoutView(views.LogoutView):
     template_name = 'users/logout.html'
 
     def get_context_data(self, **kwargs):
-        context = super(LogoutView, self).get_context_data(**kwargs)
+        context = super(
+            LogoutView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Выход'
         context['message'] = 'Вы успешно вышли!'
         context['btn_label'] = 'На главную'
@@ -34,7 +37,8 @@ class PasswordChangeDoneView(views.PasswordChangeDoneView):
     def get_context_data(self, **kwargs):
         context = super(
             PasswordChangeDoneView,
-            self).get_context_data(**kwargs)
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Смена пароля'
         context['message'] = 'Вы успешно сменили пароль!'
         context['btn_label'] = 'На главную'
@@ -46,7 +50,10 @@ class PasswordChangeView(views.PasswordChangeView):
     success_url = reverse_lazy('users:password_change_done')
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordChangeView, self).get_context_data(**kwargs)
+        context = super(
+            PasswordChangeView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Смена пароля'
         context['btn_label'] = 'Поменять'
         return context
@@ -56,7 +63,10 @@ class PasswordResetDoneView(views.PasswordResetDoneView):
     template_name = 'users/password_reset_done.html'
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordResetDoneView, self).get_context_data(**kwargs)
+        context = super(
+            PasswordResetDoneView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['message'] = 'Вам на почту отправлено письмо с подтверждением'
         context['btn_label'] = 'На главную'
@@ -70,7 +80,8 @@ class PasswordResetConfirmView(views.PasswordResetConfirmView):
     def get_context_data(self, **kwargs):
         context = super(
             PasswordResetConfirmView,
-            self).get_context_data(**kwargs)
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['btn_label'] = 'Сбросить'
         return context
@@ -81,7 +92,8 @@ class PasswordResetCompleteView(views.PasswordResetCompleteView):
 
     def get_context_data(self, **kwargs):
         context = super(
-            PasswordResetCompleteView, self
+            PasswordResetCompleteView,
+            self,
         ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['message'] = 'Пароль успешно сброшен'
@@ -95,7 +107,10 @@ class PasswordResetView(views.PasswordResetView):
     success_url = reverse_lazy('users:password_reset_done')
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordResetView, self).get_context_data(**kwargs)
+        context = super(
+            PasswordResetView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['btn_label'] = 'Сбросить'
         return context
@@ -107,7 +122,10 @@ class SignUpView(generic.edit.CreateView):
     success_url = reverse_lazy('users:login')
 
     def get_context_data(self, **kwargs):
-        context = super(SignUpView, self).get_context_data(**kwargs)
+        context = super(
+            SignUpView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Регистрация'
         context['btn_label'] = 'Подтвердить'
         return context
@@ -120,7 +138,10 @@ class ProfileEditView(generic.edit.UpdateView):
     success_url = reverse_lazy('homepage:home')
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileEditView, self).get_context_data(**kwargs)
+        context = super(
+            ProfileEditView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Ваш профиль'
         return context
 
@@ -131,7 +152,10 @@ class ProfileView(generic.edit.UpdateView):
     template_name = 'users/user_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileView, self).get_context_data(**kwargs)
+        context = super(
+            ProfileView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Ваш профиль'
         return context
 

@@ -20,11 +20,17 @@ class RegularExpressionsTests(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.category = Category.objects.create(name='Test Category',
-                                               slug='test-category-slug',
-                                               is_published=True, weight=50)
-        cls.tag = Tag.objects.create(name='Test tag', is_published=True,
-                                     slug='test-tag-slug')
+        cls.category = Category.objects.create(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True,
+            weight=50,
+        )
+        cls.tag = Tag.objects.create(
+            name='Test tag',
+            is_published=True,
+            slug='test-tag-slug',
+        )
 
     # Правильные запросы
     def test_catalog_pk_true_endpoint(self):
@@ -45,11 +51,13 @@ class RegularExpressionsTests(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_catalog_pk_true_endpoint_2(self):
-        test_item = Item(pk=1, name='test',
-                         is_published=True,
-                         category=self.category,
-                         text='Превосходно',
-                         )
+        test_item = Item(
+            pk=1,
+            name='test',
+            is_published=True,
+            category=self.category,
+            text='Превосходно',
+        )
         test_item.full_clean()
         test_item.save()
         response = Client().get(reverse('catalog:item_detail', args=[1]))
@@ -80,10 +88,12 @@ class CategoryTest(TestCase):
     def test_zero_weight(self):
         # Получение количества объектов до
         category_count = Category.objects.count()
-        test_category = Category(name='Test Category',
-                                 slug='test-category-slug',
-                                 is_published=True,
-                                 weight=0)
+        test_category = Category(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True,
+            weight=0,
+        )
         test_category.full_clean()
         test_category.save()
         # Сраниванем с количеством после. Должны отличаться на 1
@@ -93,10 +103,12 @@ class CategoryTest(TestCase):
     def test_negative_weight(self):
         category_count = Category.objects.count()
         with self.assertRaises(ValidationError):
-            test_category = Category(name='Test Category',
-                                     slug='test-category-slug',
-                                     is_published=True,
-                                     weight=-14)
+            test_category = Category(
+                name='Test Category',
+                slug='test-category-slug',
+                is_published=True,
+                weight=-14,
+            )
             test_category.full_clean()
             test_category.save()
         self.assertEqual(Category.objects.count(), category_count)
@@ -104,10 +116,12 @@ class CategoryTest(TestCase):
     # Тест граничного случая веса в категории
     def test_limit_weight(self):
         category_count = Category.objects.count()
-        test_category = Category(name='Test Category',
-                                 slug='test-category-slug',
-                                 is_published=True,
-                                 weight=32767)
+        test_category = Category(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True,
+            weight=32767,
+        )
         test_category.full_clean()
         test_category.save()
         self.assertEqual(Category.objects.count(), category_count + 1)
@@ -116,10 +130,12 @@ class CategoryTest(TestCase):
     def test_over_limit_weight(self):
         category_count = Category.objects.count()
         with self.assertRaises(ValidationError):
-            test_category = Category(name='Test Category',
-                                     slug='test-category-slug',
-                                     is_published=True,
-                                     weight=50000)
+            test_category = Category(
+                name='Test Category',
+                slug='test-category-slug',
+                is_published=True,
+                weight=50000,
+            )
             test_category.full_clean()
             test_category.save()
         self.assertEqual(Category.objects.count(), category_count)
@@ -127,10 +143,12 @@ class CategoryTest(TestCase):
     # Тест правильного значения веса в категории
     def test_right_weight(self):
         category_count = Category.objects.count()
-        test_category = Category(name='Test Category',
-                                 slug='test-category-slug',
-                                 is_published=True,
-                                 weight=155)
+        test_category = Category(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True,
+            weight=155,
+        )
         test_category.full_clean()
         test_category.save()
         # Количество объектов должно быть больше на 1, чем изначально
@@ -145,7 +163,8 @@ class ItemTest(TestCase):
         cls.category = Category.objects.create(
             name='Test Category',
             slug='test-category-slug',
-            is_published=True, weight=50
+            is_published=True,
+            weight=50,
         )
         cls.tag = Tag.objects.create(
             name='Test tag',
@@ -241,11 +260,17 @@ class ItemListTest(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.category = Category.objects.create(name='Test Category',
-                                               slug='test-category-slug',
-                                               is_published=True, weight=50)
-        cls.tag = Tag.objects.create(name='Test tag', is_published=True,
-                                     slug='test-tag-slug')
+        cls.category = Category.objects.create(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True,
+            weight=50,
+        )
+        cls.tag = Tag.objects.create(
+            name='Test tag',
+            is_published=True,
+            slug='test-tag-slug',
+        )
 
     def test_list_show_correct_content(self):
         response = Client().get(reverse('catalog:item_list'))
