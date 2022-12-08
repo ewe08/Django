@@ -8,3 +8,10 @@ class Feedback(models.Model):
         help_text='Сюды текст надо для письма'
     )
     created_on = models.DateTimeField(default=datetime.now())
+
+    class Meta:
+        verbose_name = 'Обратная связь'
+        verbose_name_plural = 'Обатные связи'
+
+    def __str__(self):
+        return str(self.created_on)

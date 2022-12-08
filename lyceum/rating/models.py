@@ -17,11 +17,13 @@ class Rating(models.Model):
     item = models.ForeignKey(
         Item,
         on_delete=models.CASCADE,
+        related_name='item'
     )
 
     user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
+        related_name='user'
     )
 
     rate = models.CharField(
@@ -29,12 +31,12 @@ class Rating(models.Model):
         choices=choices,
     )
 
-    def __str__(self):
-        return f'{self.rate} - {self.item.name} - {self.user.email}'
-
     class Meta:
         verbose_name = 'рейтинг'
         verbose_name_plural = 'рейтинги'
         constraints = [
             UniqueConstraint(fields=['user', 'rate'], name='rating_once')
         ]
+
+    def __str__(self):
+        return f'{self.rate} - {self.item.name} - {self.user.email}'
