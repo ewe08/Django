@@ -2,6 +2,5 @@ venv
 .vscode
 .env
 __pycache__
-send_mail/
 db.sqlite3
 .idea
