@@ -8,11 +8,26 @@ class NamedBaseModel(models.Model):
         help_text='Название.',
     )
 
+    class Meta:
+        abstract = True
+
     def __str__(self):
         return self.name
 
+
+class UniqueNamedBaseModel(models.Model):
+    name = models.CharField(
+        'название',
+        unique=True,
+        max_length=150,
+        help_text='Название.',
+    )
+
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.name
 
 
 class PublishedBaseModel(models.Model):

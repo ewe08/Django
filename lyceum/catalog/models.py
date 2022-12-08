@@ -6,10 +6,11 @@ from tinymce.models import HTMLField
 
 from catalog.managers import ItemManager, TagManager
 from catalog.validators import validate_must_be_param
-from core.models import NamedBaseModel, PublishedBaseModel, SluggedBaseModel
+from core.models import (NamedBaseModel, PublishedBaseModel,
+                         SluggedBaseModel, UniqueNamedBaseModel)
 
 
-class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+class Tag(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     objects = TagManager()
 
     class Meta:
@@ -17,7 +18,7 @@ class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
         verbose_name_plural = 'тэги'
 
 
-class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+class Category(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     weight = models.PositiveSmallIntegerField(
             'вес',
             default=100,
