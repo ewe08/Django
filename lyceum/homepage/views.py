@@ -15,3 +15,4 @@ class HomeView(ListView):
 
     def get_queryset(self):
         return Item.objects.on_main()
+
