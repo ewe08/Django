@@ -4,11 +4,9 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
-
-from catalog.validators import validate_must_be_param
-
-from core.models import AbstractModel, AbstractModelWithSlug
 from catalog.managers import ItemManager
+from catalog.validators import validate_must_be_param
+from core.models import AbstractModel, AbstractModelWithSlug
 
 
 class TagManager(models.Manager):
