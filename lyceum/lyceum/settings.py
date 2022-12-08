@@ -1,5 +1,3 @@
-import json
-import os
 from pathlib import Path
 
 import environ
@@ -13,17 +11,18 @@ env = environ.Env(
     DEFAULT_USER_EMAIL=(str, 'test-support-email@test.com')
 )
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env.read_env(BASE_DIR / '.env')
 
 SECRET_KEY = env('SECRET_KEY')
+
 DEBUG = env('DEBUG')
+
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 if DEBUG:
-    INTERNAL_IPS = json.loads(os.environ.get('INTERNAL_IPS', default='[]'))
+    INTERNAL_IPS = env.list('INTERNAL_IPS')
 else:
     INTERNAL_IPS = []
 
