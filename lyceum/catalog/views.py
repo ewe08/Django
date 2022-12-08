@@ -13,8 +13,7 @@ class ItemList(ListView):
     template_name = 'catalog/index_list.html'
 
     def get_queryset(self):
-        queryset = Item.objects.categories()
-        return queryset
+        return Item.objects.categories()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
