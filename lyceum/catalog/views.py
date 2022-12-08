@@ -29,21 +29,21 @@ class ItemDetail(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(
             Item.objects.published(),
-            pk=self.kwargs['pk']
+            pk=self.kwargs['pk'],
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['title'] = 'Подробнее'
         context['photos'] = Photo.objects.filter(
-            item_galery=context['item'].id
+            item_galery=context['item'].id,
         )
         rating = Rating.objects.filter(item=self.object,
                                        user=self.request.user.id).first()
         user_rating = rating.rate if rating else None
         count = Rating.objects.filter(item=self.kwargs['pk']).count()
         average_rating = Rating.objects.filter(
-            item=self.kwargs['pk']
+            item=self.kwargs['pk'],
         ).aggregate(Avg('rate'))
         context['rating_count'] = count
         context['average_rating'] = average_rating['rate__avg']
@@ -55,8 +55,11 @@ class ItemDetail(DetailView):
     def post(self, request, *args, **kwargs):
         form = RatingForm(request.POST)
         if not form.is_valid():
-            return redirect(reverse('catalog:item_detail',
-                                    args=[self.kwargs['pk']]))
+            return redirect(reverse(
+                'catalog:item_detail',
+                args=[self.kwargs['pk']],
+                )
+            )
         item = self.get_object()
         rating = Rating.objects.filter(item=item,
                                        user=request.user.id).first()
@@ -66,9 +69,12 @@ class ItemDetail(DetailView):
             rating = Rating.objects.create(
                 user=request.user,
                 item=item,
-                rate=form.cleaned_data['rate']
+                rate=form.cleaned_data['rate'],
             )
         rating.save()
 
-        return redirect(reverse('catalog:item_detail',
-                                args=[self.kwargs['pk']]))
+        return redirect(reverse(
+            'catalog:item_detail',
+            args=[self.kwargs['pk']],
+            )
+        )

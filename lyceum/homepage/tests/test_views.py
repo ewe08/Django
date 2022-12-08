@@ -12,11 +12,17 @@ class TaskPagesTests(TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.category = Category.objects.create(name='Test Category',
-                                               slug='test-category-slug',
-                                               is_published=True, weight=50)
-        cls.tag = Tag.objects.create(name='Test tag', is_published=True,
-                                     slug='test-tag-slug')
+        cls.category = Category.objects.create(
+            name='Test Category',
+            slug='test-category-slug',
+            is_published=True,
+            weight=50,
+        )
+        cls.tag = Tag.objects.create(
+            name='Test tag',
+            is_published=True,
+            slug='test-tag-slug',
+        )
 
     def test_homepage_show_correct_content(self):
         response = Client().get(reverse('homepage:home'))
@@ -24,12 +30,13 @@ class TaskPagesTests(TestCase):
         self.assertEqual(len(response.context['items']), 0)
 
     def test_homepage_with_objects_show_correct_content(self):
-        test_item = Item(name='test',
-                         is_published=True,
-                         category=self.category,
-                         text='Превосходно',
-                         is_on_main=True,
-                         )
+        test_item = Item(
+            name='test',
+            is_published=True,
+            category=self.category,
+            text='Превосходно',
+            is_on_main=True,
+        )
         test_item.full_clean()
         test_item.save()
 

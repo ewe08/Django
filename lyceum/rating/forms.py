@@ -10,8 +10,8 @@ class RatingForm(forms.ModelForm):
             Rating.rate.field.name,
         )
         labels = {
-            Rating.rate.field.name: 'Оценка'
+            Rating.rate.field.name: 'Оценка',
         }
         help_texts = {
-            Rating.rate.field.name: 'Оцените товар'
+            Rating.rate.field.name: 'Оцените товар',
         }

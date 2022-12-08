@@ -9,13 +9,13 @@ class CustomUser(AbstractUser):
     email = models.EmailField(
         'email',
         unique=True,
-        help_text='Ваш email'
+        help_text='Ваш email',
     )
     birthday = models.DateField(
         'день рождения',
         null=True,
         blank=True,
-        help_text='Дата в формате дд.мм.гггг'
+        help_text='Дата в формате дд.мм.гггг',
     )
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
