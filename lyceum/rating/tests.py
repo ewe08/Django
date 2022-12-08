@@ -1,8 +1,9 @@
-from django.test import TestCase
-from django.core.exceptions import ValidationError
-
 from catalog.models import Category, Item
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.test import TestCase
 from users.models import CustomUser
+
 from .models import Rating
 
 
@@ -30,7 +31,7 @@ class RaitingModelTests(TestCase):
     def test_create_rating(self):
         raiting_count = Rating.objects.count()
         custom_user = CustomUser(
-            email='test@test.com',
+            email=settings.TEST_USER_EMAIL,
             password='123',
         )
         custom_user.full_clean()
@@ -48,7 +49,7 @@ class RaitingModelTests(TestCase):
     def test_once_rating(self):
         raiting_count = Rating.objects.count()
         custom_user = CustomUser(
-            email='test@test.com',
+            email=settings.TEST_USER_EMAIL,
             password='123',
         )
         custom_user.full_clean()

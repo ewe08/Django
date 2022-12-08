@@ -13,6 +13,9 @@ SECRET_KEY = str(os.getenv('SECRET_KEY', default='unsafe-secret-key'))
 
 DEBUG = eval(os.getenv('DEBUG_MODE', default='True'))
 
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+TEST_USER_EMAIL = os.getenv('DEFAULT_USER_EMAIL')
+
 ALLOWED_HOSTS = json.loads(
     os.environ.get('ALLOWED_HOSTS', default='["*"]'))
 
