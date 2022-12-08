@@ -2,22 +2,27 @@ import json
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+import environ
 
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, 'dummy-key'),
+    ALLOWED_HOSTS=(list, ['*']),
+    INTERNAL_IPS=(list, []),
+    DEFAULT_FROM_EMAIL=(str, 'DjangoLearning@support.com'),
+    DEFAULT_USER_EMAIL=(str, 'test-support-email@test.com')
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(BASE_DIR / '.env')
+env.read_env(BASE_DIR / '.env')
 
-SECRET_KEY = str(os.getenv('SECRET_KEY', default='unsafe-secret-key'))
-
-DEBUG = eval(os.getenv('DEBUG_MODE', default='True'))
-
-ALLOWED_HOSTS = json.loads(
-    os.environ.get('ALLOWED_HOSTS', default='["*"]'))
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 if DEBUG:
-    INTERNAL_IPS = json.loads(os.environ.get('INTERNAL_IPS', default='[]'))
+    INTERNAL_IPS = env.list('INTERNAL_IPS')
 else:
     INTERNAL_IPS = []
 
@@ -136,18 +141,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-DEFAULT_FROM_EMAIL = str(os.environ.get(
-    'DEFAULT_FROM_EMAIL',
-    default='djangoLearning@support.com')
-)
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = 'homepage:home'
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL',
-                               default='test-user-email@test.com')
-TEST_USER_EMAIL = os.getenv('DEFAULT_USER_EMAIL',
-                            default='test-support-email@test.com')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+TEST_USER_EMAIL = env('DEFAULT_USER_EMAIL')

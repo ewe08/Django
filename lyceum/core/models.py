@@ -5,7 +5,7 @@ class NamedBaseModel(models.Model):
     name = models.CharField(
         'название',
         max_length=150,
-        help_text='Название.'
+        help_text='Название.',
     )
 
     def __str__(self):
@@ -19,7 +19,7 @@ class PublishedBaseModel(models.Model):
     is_published = models.BooleanField(
         'опубликовано',
         default=True,
-        help_text='Проверка на публикацю.'
+        help_text='Проверка на публикацию.',
     )
 
     class Meta:
@@ -30,7 +30,7 @@ class SluggedBaseModel(models.Model):
     slug = models.SlugField(
         max_length=200,
         unique=True,
-        help_text='slug для будущей ссылки.'
+        help_text='Slug для будущей ссылки.',
     )
 
     class Meta:

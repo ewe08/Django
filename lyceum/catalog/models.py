@@ -4,20 +4,12 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
-from .validators import validate_must_be_param
-from core.models import NamedBaseModel, PublishedBaseModel, SluggedBaseModel
+from catalog.managers import ItemManager, TagManager
+from catalog.validators import validate_must_be_param
+from core.models import AbstractModel, AbstractModelWithSlug
 
 
-class TagManager(models.Manager):
-    def published(self):
-        return (
-            self.get_queryset()
-            .filter(is_published=True)
-            .only('name')
-        )
-
-
-class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+class Tag(AbstractModelWithSlug):
     objects = TagManager()
 
     class Meta:
@@ -27,13 +19,13 @@ class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
 
 class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     weight = models.PositiveSmallIntegerField(
-        'вес',
-        default=100,
-        validators=[
-            MinValueValidator(0),
-            MaxValueValidator(32767)
-        ],
-        help_text='Вес, должен быть 0 до 32767.'
+            'вес',
+            default=100,
+            validators=[
+                MinValueValidator(0),
+                MaxValueValidator(32767),
+            ],
+            help_text='Вес, должен быть от 0 до 32767.',
     )
 
     class Meta:
@@ -84,12 +76,13 @@ class Item(NamedBaseModel, PublishedBaseModel):
     text = HTMLField(
         'описание',
         validators=[
-            validate_must_be_param('превосходно', 'роскошно')],
-        help_text='Описание предмета. Должны быть слова "превосходно"'
-                  ' или "роскошно".',
+            validate_must_be_param('превосходно', 'роскошно'),
+        ],
+        help_text='Описание предмета. Должны быть слова "превосходно" '
+                  'или "роскошно".',
     )
     is_on_main = models.BooleanField(
-        'В главной?',
+        'На главной?',
         default=False,
     )
 
@@ -104,7 +97,7 @@ class Item(NamedBaseModel, PublishedBaseModel):
 class Photo(models.Model):
     image = models.ImageField(
         'изображение',
-        upload_to='uploads/%Y/%m'
+        upload_to='uploads/%Y/%m',
     )
 
     item_main = models.OneToOneField(
@@ -112,7 +105,7 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='item_main'
+        related_name='item_main',
     )
 
     item_galery = models.ForeignKey(
@@ -122,7 +115,7 @@ class Photo(models.Model):
         help_text='Фотографии предмета.',
         related_name='item_galery',
         null=True,
-        blank=True
+        blank=True,
     )
 
     class Meta:
@@ -138,13 +131,14 @@ class Photo(models.Model):
             self.image,
             '300x300',
             crop='center',
-            quality=51)
+            quality=51,
+            )
 
     def image_tmb(self):
         if self.image:
             return mark_safe(
-                f'<img src="{self.get_img.url}">'
-            )
+                f'<img src="{self.get_img.url}">',
+                )
         return None
 
     image_tmb.short_description = 'превью'

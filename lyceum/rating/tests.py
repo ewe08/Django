@@ -18,7 +18,8 @@ class RaitingModelTests(TestCase):
         cls.category = Category.objects.create(
             name='Test Category',
             slug='test-category-slug',
-            is_published=True, weight=50
+            is_published=True,
+            weight=50,
         )
         cls.item = Item.objects.create(
             name='test',
@@ -40,7 +41,7 @@ class RaitingModelTests(TestCase):
         rating = Rating(
             user=custom_user,
             item=self.item,
-            rate='1'
+            rate=1,
         )
         rating.full_clean()
         rating.save()
@@ -58,7 +59,7 @@ class RaitingModelTests(TestCase):
         rating_1 = Rating(
             user=custom_user,
             item=self.item,
-            rate='1'
+            rate=1
         )
         rating_1.full_clean()
         rating_1.save()
@@ -66,7 +67,7 @@ class RaitingModelTests(TestCase):
             rating_2 = Rating(
                 user=custom_user,
                 item=self.item,
-                rate='1'
+                rate=1
             )
             rating_2.full_clean()
             rating_2.save()

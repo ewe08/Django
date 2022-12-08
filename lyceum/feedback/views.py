@@ -20,8 +20,8 @@ class FeedbackView(FormView):
         send_mail(
             'Тема письма',
             f'{form.cleaned_data["text"]}',
-            settings.DEFAULT_FROM_EMAIL,
-            ['to@example.com'],
+            'from@example.com',
+            [settings.DEFAULT_FROM_EMAIL],
             fail_silently=False,
         )
         return super().form_valid(form)
