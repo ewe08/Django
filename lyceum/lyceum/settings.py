@@ -13,9 +13,6 @@ SECRET_KEY = str(os.getenv('SECRET_KEY', default='unsafe-secret-key'))
 
 DEBUG = eval(os.getenv('DEBUG_MODE', default='True'))
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-TEST_USER_EMAIL = os.getenv('DEFAULT_USER_EMAIL')
-
 ALLOWED_HOSTS = json.loads(
     os.environ.get('ALLOWED_HOSTS', default='["*"]'))
 
@@ -61,11 +58,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'lyceum.urls'
 
+TEMPLATES_DIR = BASE_DIR / 'templates'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates'
+            TEMPLATES_DIR
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -130,7 +129,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev'
 ]
-STATIC_ROOT = 'static'
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -141,9 +140,14 @@ DEFAULT_FROM_EMAIL = str(os.environ.get(
     'DEFAULT_FROM_EMAIL',
     default='djangoLearning@support.com')
 )
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = 'homepage:home'
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL',
+                               default='test-user-email@test.com')
+TEST_USER_EMAIL = os.getenv('DEFAULT_USER_EMAIL',
+                            default='test-support-email@test.com')
