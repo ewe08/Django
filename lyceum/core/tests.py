@@ -1,7 +1,7 @@
 import datetime as dt
 
 from django.conf import settings
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 from django.urls import reverse
 
 from users.models import CustomUser
