@@ -1,12 +1,11 @@
 from django.db.models import Avg
-from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 
+from catalog.models import Item, Photo
 from rating.forms import RatingForm
 from rating.models import Rating
-from .models import Item, Photo
 
 
 class ItemList(ListView):

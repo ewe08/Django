@@ -1,7 +1,7 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from catalog.models import Category, Tag, Item
+from catalog.models import Category, Item, Tag
 
 
 class TaskPagesTests(TestCase):

@@ -18,4 +18,5 @@ def validate_must_be_param(*args):
                 f'{" ".join(list(must_be_in_our_item))}')
 
         return value
+
     return word_validate

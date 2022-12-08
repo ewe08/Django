@@ -1,10 +1,10 @@
 from django.urls import path
 
-from .views import LoginView, LogoutView, \
-    PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, \
-    PasswordResetCompleteView, SignUpView, ProfileView, \
-    ProfileEditView, UsersList
+from .views import (LoginView, LogoutView, PasswordChangeDoneView,
+                    PasswordChangeView, PasswordResetCompleteView,
+                    PasswordResetConfirmView, PasswordResetDoneView,
+                    PasswordResetView, ProfileEditView, ProfileView,
+                    SignUpView, UsersList)
 
 app_name = 'users'
 urlpatterns = [

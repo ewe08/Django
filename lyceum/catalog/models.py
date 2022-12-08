@@ -1,6 +1,6 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.core.validators import MinValueValidator, MaxValueValidator
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
@@ -12,8 +12,8 @@ class TagManager(models.Manager):
     def published(self):
         return (
             self.get_queryset()
-                .filter(is_published=True)
-                .only('name')
+            .filter(is_published=True)
+            .only('name')
         )
 
 
@@ -27,13 +27,13 @@ class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
 
 class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     weight = models.PositiveSmallIntegerField(
-            'вес',
-            default=100,
-            validators=[
-                MinValueValidator(0),
-                MaxValueValidator(32767)
-            ],
-            help_text='Вес, должен быть 0 до 32767.'
+        'вес',
+        default=100,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(32767)
+        ],
+        help_text='Вес, должен быть 0 до 32767.'
     )
 
     class Meta:
@@ -45,13 +45,13 @@ class ItemManager(models.Manager):
     def published(self):
         return (
             self.get_queryset()
-                .filter(
-                    is_published=True,
-                    category__is_published=True)
-                .select_related('category')
-                .prefetch_related(
-                    models.Prefetch('tags', queryset=Tag.objects.published())
-                )
+            .filter(
+                is_published=True,
+                category__is_published=True)
+            .select_related('category')
+            .prefetch_related(
+                models.Prefetch('tags', queryset=Tag.objects.published())
+            )
         )
 
     def categories(self):
@@ -72,12 +72,14 @@ class Item(NamedBaseModel, PublishedBaseModel):
         Category,
         verbose_name='категория',
         on_delete=models.CASCADE,
-        help_text='Категория. Связь o2m.'
+        help_text='Категория. Связь o2m.',
+        related_name='category'
     )
     tags = models.ManyToManyField(
         Tag,
         verbose_name='тэги',
-        help_text='теги. Связь m2m.'
+        help_text='Теги. Связь m2m.',
+        related_name='tags'
     )
     text = HTMLField(
         'описание',
@@ -90,6 +92,8 @@ class Item(NamedBaseModel, PublishedBaseModel):
         'В главной?',
         default=False,
     )
+
+    objects = ItemManager()
 
     class Meta:
         verbose_name = 'товар'
@@ -108,17 +112,25 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
+        related_name='item_main'
     )
 
     item_galery = models.ForeignKey(
         Item,
         verbose_name='галерея фотографий',
         on_delete=models.CASCADE,
-        help_text='фотографии предмета.',
+        help_text='Фотографии предмета.',
         related_name='item_galery',
         null=True,
         blank=True
     )
+
+    class Meta:
+        verbose_name = 'фото'
+        verbose_name_plural = 'фотографии'
+
+    def __str__(self):
+        return self.image.name
 
     @property
     def get_img(self):
@@ -133,13 +145,7 @@ class Photo(models.Model):
             return mark_safe(
                 f'<img src="{self.get_img.url}">'
             )
+        return None
 
     image_tmb.short_description = 'превью'
     image_tmb.allow_tags = True
-
-    def __str__(self):
-        return self.image.name
-
-    class Meta:
-        verbose_name = 'фото'
-        verbose_name_plural = 'фотографии'

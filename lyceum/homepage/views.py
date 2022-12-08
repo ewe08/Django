@@ -14,6 +14,5 @@ class HomeView(ListView):
         return context
 
     def get_queryset(self):
-        return Item.objects.published() \
-            .filter(is_on_main=True) \
-            .order_by('name')
+        return Item.objects.published().filter(
+            is_on_main=True).order_by('name')
