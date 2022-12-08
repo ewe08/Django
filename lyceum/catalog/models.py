@@ -6,10 +6,10 @@ from tinymce.models import HTMLField
 
 from catalog.managers import ItemManager, TagManager
 from catalog.validators import validate_must_be_param
-from core.models import AbstractModel, AbstractModelWithSlug
+from core.models import NamedBaseModel, PublishedBaseModel, SluggedBaseModel
 
 
-class Tag(AbstractModelWithSlug):
+class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     objects = TagManager()
 
     class Meta:
@@ -31,30 +31,6 @@ class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
-
-
-class ItemManager(models.Manager):
-    def published(self):
-        return (
-            self.get_queryset()
-            .filter(
-                is_published=True,
-                category__is_published=True)
-            .select_related('category')
-            .prefetch_related(
-                models.Prefetch('tags', queryset=Tag.objects.published())
-            )
-        )
-
-    def categories(self):
-        categories = dict()
-        for item in Item.objects.published().order_by('category__name'):
-            cat = item.category
-            if cat in categories:
-                categories[cat].append(item)
-            else:
-                categories[cat] = [item]
-        return categories
 
 
 class Item(NamedBaseModel, PublishedBaseModel):
