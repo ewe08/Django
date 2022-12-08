@@ -44,7 +44,6 @@ class Category(AbstractModelWithSlug):
         verbose_name_plural = 'категории'
 
 
-
 class Item(AbstractModel):
     category = models.ForeignKey(
         Category,
