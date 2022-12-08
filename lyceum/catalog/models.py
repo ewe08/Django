@@ -9,15 +9,6 @@ from catalog.validators import validate_must_be_param
 from core.models import NamedBaseModel, PublishedBaseModel, SluggedBaseModel
 
 
-class TagManager(models.Manager):
-    def published(self):
-        return (
-            self.get_queryset()
-            .filter(is_published=True)
-            .only('name')
-        )
-
-
 class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     objects = TagManager()
 
