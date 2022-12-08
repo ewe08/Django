@@ -11,6 +11,8 @@ from core.models import (NamedBaseModel, PublishedBaseModel,
 
 
 class Tag(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+    """Tag model with name, is_published and slug field."""
+
     objects = TagManager()
 
     class Meta:
@@ -19,6 +21,7 @@ class Tag(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
 
 
 class Category(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+    """Category model with name, is_published, slug and weight field."""
     weight = models.PositiveSmallIntegerField(
             'вес',
             default=100,
@@ -35,6 +38,10 @@ class Category(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
 
 
 class Item(NamedBaseModel, PublishedBaseModel):
+    """
+    Item model with name, is_published, category,
+    tags, text and is_on_main field.
+    """
     objects = ItemManager()
     category = models.ForeignKey(
         Category,
@@ -69,6 +76,8 @@ class Item(NamedBaseModel, PublishedBaseModel):
 
 
 class Photo(models.Model):
+    """Photo model with image, main_item and item_gallery field."""
+
     image = models.ImageField(
         'изображение',
         upload_to='uploads/%Y/%m',

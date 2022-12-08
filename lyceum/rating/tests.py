@@ -8,6 +8,8 @@ from .models import Rating
 
 
 class RaitingModelTests(TestCase):
+    """Test rating model."""
+
     def tearDown(self):
         Rating.objects.all().delete()
         super().tearDown()
@@ -30,6 +32,8 @@ class RaitingModelTests(TestCase):
         )
 
     def test_create_rating(self):
+        """Test create rating with correct params."""
+
         raiting_count = Rating.objects.count()
         custom_user = CustomUser(
             email=settings.TEST_USER_EMAIL,
@@ -48,6 +52,8 @@ class RaitingModelTests(TestCase):
         self.assertEqual(Rating.objects.count(), raiting_count + 1)
 
     def test_once_rating(self):
+        """Test create 2 ratings from one user to one item."""
+
         raiting_count = Rating.objects.count()
         custom_user = CustomUser(
             email=settings.TEST_USER_EMAIL,

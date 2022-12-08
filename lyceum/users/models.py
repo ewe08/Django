@@ -5,6 +5,8 @@ from .managers import CustomUserManager
 
 
 class CustomUser(AbstractUser):
+    """Custom user model with additional unique email and birthday field."""
+
     username = None
     email = models.EmailField(
         'email',
