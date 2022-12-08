@@ -8,15 +8,15 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, ['*']),
     INTERNAL_IPS=(list, []),
     DEFAULT_FROM_EMAIL=(str, 'DjangoLearning@support.com'),
+    DEFAULT_USER_EMAIL=(str, 'test-support-email@test.com')
 )
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env.read_env(BASE_DIR / '.env')
-# SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = env('SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
@@ -25,8 +25,6 @@ if DEBUG:
     INTERNAL_IPS = env.list('INTERNAL_IPS')
 else:
     INTERNAL_IPS = []
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -65,11 +63,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'lyceum.urls'
 
+TEMPLATES_DIR = BASE_DIR / 'templates'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'templates'
+            TEMPLATES_DIR
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -86,20 +86,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lyceum.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -128,10 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Asia/Novosibirsk'
@@ -142,28 +130,22 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev'
 ]
-STATIC_ROOT = 'static'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = 'homepage:home'
+
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+TEST_USER_EMAIL = env('DEFAULT_USER_EMAIL')

@@ -1,5 +1,6 @@
 import datetime as dt
 
+from django.conf import settings
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -13,7 +14,7 @@ class BirthdayTests(TestCase):
 
     def test_have_birthday(self):
         custom_user = CustomUser(
-            email='test@test.com',
+            email=settings.TEST_USER_EMAIL,
             password='123',
             birthday=dt.date.today(),
         )
@@ -29,7 +30,7 @@ class BirthdayTests(TestCase):
 
     def test_havent_birthday(self):
         custom_user = CustomUser(
-            email='test@test.com',
+            email=settings.TEST_USER_EMAIL,
             password='123',
             birthday=dt.date.today() + dt.timedelta(days=2),
         )
@@ -48,7 +49,7 @@ class BirthdayTests(TestCase):
             )
         for i in range(1, 4):
             new_user = CustomUser(
-                email=f'test{i}@test.com',
+                email=f'{i}{settings.TEST_USER_EMAIL}',
                 password=f'1232048734{i}',
                 birthday=dt.date.today(),
             )

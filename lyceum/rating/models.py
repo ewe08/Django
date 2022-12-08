@@ -18,16 +18,19 @@ class Rating(models.Model):
         Item,
         on_delete=models.CASCADE,
         related_name='item',
+        help_text='Предмет оценки.'
     )
 
     user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
         related_name='user',
+        help_text='Оценщик товара.'
     )
 
     rate = models.IntegerField(
         choices=RainitgStatus.choices,
+        help_text='Оценка товара.'
     )
 
     class Meta:

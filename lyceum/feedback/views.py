@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import send_mail
+from django.urls import reverse_lazy
 from django.views.generic import FormView
 
 from .forms import FeedbackForm
@@ -9,7 +10,7 @@ from .models import Feedback
 class FeedbackView(FormView):
     template_name = 'feedback/feedback.html'
     form_class = FeedbackForm
-    success_url = '/feedback/'
+    success_url = reverse_lazy('feedback:feedback')
 
     def form_valid(self, form):
         text = form.cleaned_data['text']
@@ -17,9 +18,16 @@ class FeedbackView(FormView):
             text=text,
         )
         send_mail(
-            'Тема письма',
+            'Спасибо за ваш фидбек',
             f'{form.cleaned_data["text"]}',
-            'from@example.com',
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.TEST_USER_EMAIL],
+            fail_silently=False,
+        )
+        send_mail(
+            f'Отправлен фидбек от {settings.TEST_USER_EMAIL}',
+            f'{form.cleaned_data["text"]}',
+            settings.TEST_USER_EMAIL,
             [settings.DEFAULT_FROM_EMAIL],
             fail_silently=False,
         )

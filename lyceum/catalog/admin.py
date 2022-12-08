@@ -27,15 +27,15 @@ class ItemAdmin(admin.ModelAdmin):
         'is_published',
         'show_image_preview',
     )
-    list_editable = ['is_published', ]
-    list_display_links = ['name', ]
-    filter_horizontal = ['tags', ]
-    inlines = [
+    list_editable = ('is_published', )
+    list_display_links = ('name', )
+    filter_horizontal = ('tags', )
+    inlines = (
         MainPhoto,
         GalleryInline,
-    ]
+    )
 
     def show_image_preview(self, obj):
         return obj.photo.image_tmb()
 
-    show_image_preview.short_description = u'Изображение'
+    show_image_preview.short_description = 'Изображение'

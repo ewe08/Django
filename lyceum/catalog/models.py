@@ -6,10 +6,11 @@ from tinymce.models import HTMLField
 
 from catalog.managers import ItemManager, TagManager
 from catalog.validators import validate_must_be_param
-from core.models import AbstractModel, AbstractModelWithSlug
+from core.models import (NamedBaseModel, PublishedBaseModel,
+                         SluggedBaseModel, UniqueNamedBaseModel)
 
 
-class Tag(AbstractModelWithSlug):
+class Tag(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     objects = TagManager()
 
     class Meta:
@@ -17,7 +18,7 @@ class Tag(AbstractModelWithSlug):
         verbose_name_plural = 'тэги'
 
 
-class Category(AbstractModelWithSlug):
+class Category(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     weight = models.PositiveSmallIntegerField(
             'вес',
             default=100,
@@ -33,7 +34,8 @@ class Category(AbstractModelWithSlug):
         verbose_name_plural = 'категории'
 
 
-class Item(AbstractModel):
+class Item(NamedBaseModel, PublishedBaseModel):
+    objects = ItemManager()
     category = models.ForeignKey(
         Category,
         verbose_name='категория',
@@ -59,8 +61,6 @@ class Item(AbstractModel):
         'На главной?',
         default=False,
     )
-
-    objects = ItemManager()
 
     class Meta:
         verbose_name = 'товар'
