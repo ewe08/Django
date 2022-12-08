@@ -1,12 +1,11 @@
 from django.db.models import Avg
-from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 
+from catalog.models import Item, Photo
 from rating.forms import RatingForm
 from rating.models import Rating
-from .models import Item, Photo
 
 
 class ItemList(ListView):
@@ -28,19 +27,21 @@ class ItemDetail(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(
             Item.objects.published(),
-            pk=self.kwargs['pk']
+            pk=self.kwargs['pk'],
         )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['title'] = 'Подробнее'
         context['photos'] = Photo.objects.filter(
-            item_galery=context['item'].id
+            item_galery=context['item'].id,
         )
 
         if self.request.user.is_authenticated:
-            rating = Rating.objects.filter(item=self.object,
-                                           user=self.request.user).first()
+            rating = Rating.objects.filter(
+                item=self.object,
+                user=self.request.user,
+                ).first()
         else:
             rating = None
         if rating:
@@ -49,7 +50,7 @@ class ItemDetail(DetailView):
             user_rating = False
         count = Rating.objects.filter(item=self.kwargs['pk']).count()
         average_rating = Rating.objects.filter(
-            item=self.kwargs['pk']
+            item=self.kwargs['pk'],
         ).aggregate(Avg('rate'))
         context['rating_count'] = count
         context['average_rating'] = average_rating['rate__avg']
@@ -61,12 +62,17 @@ class ItemDetail(DetailView):
     def post(self, request, *args, **kwargs):
         form = RatingForm(request.POST)
         if not form.is_valid():
-            return redirect(reverse('catalog:item_detail',
-                                    args=[self.kwargs['pk']]))
+            return redirect(reverse(
+                'catalog:item_detail',
+                args=[self.kwargs['pk']],
+                )
+            )
         item = self.get_object()
         if request.user.is_authenticated:
-            rating = Rating.objects.filter(item=item,
-                                           user=request.user).first()
+            rating = Rating.objects.filter(
+                item=item,
+                user=request.user,
+            ).first()
         else:
             rating = None
         if rating:
@@ -75,9 +81,12 @@ class ItemDetail(DetailView):
             rating = Rating.objects.create(
                 user=request.user,
                 item=item,
-                rate=form.cleaned_data['rate']
+                rate=form.cleaned_data['rate'],
             )
         rating.save()
 
-        return redirect(reverse('catalog:item_detail',
-                                args=[self.kwargs['pk']]))
+        return redirect(reverse(
+            'catalog:item_detail',
+            args=[self.kwargs['pk']],
+            )
+        )

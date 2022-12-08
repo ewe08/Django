@@ -1,14 +1,13 @@
-from django.contrib.auth.views import LoginView, LogoutView, \
-    PasswordChangeView, PasswordChangeDoneView, PasswordResetView, \
-    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.contrib.auth import views
+
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import CustomUser
 
 
-class LoginView(LoginView):
+class LoginView(views.LoginView):
     template_name = 'users/login.html'
 
     def get_context_data(self, **kwargs):
@@ -18,71 +17,83 @@ class LoginView(LoginView):
         return context
 
 
-class LogoutView(LogoutView):
+class LogoutView(views.LogoutView):
     template_name = 'users/logout.html'
 
     def get_context_data(self, **kwargs):
-        context = super(LogoutView, self).get_context_data(**kwargs)
+        context = super(
+            LogoutView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Выход'
         context['message'] = 'Вы успешно вышли!'
         context['btn_label'] = 'На главную'
         return context
 
 
-class PasswordChangeDoneView(PasswordChangeDoneView):
+class PasswordChangeDoneView(views.PasswordChangeDoneView):
     template_name = 'users/password_change_done.html'
 
     def get_context_data(self, **kwargs):
         context = super(
             PasswordChangeDoneView,
-            self).get_context_data(**kwargs)
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Смена пароля'
         context['message'] = 'Вы успешно сменили пароль!'
         context['btn_label'] = 'На главную'
         return context
 
 
-class PasswordChangeView(PasswordChangeView):
+class PasswordChangeView(views.PasswordChangeView):
     template_name = 'users/password_change.html'
     success_url = reverse_lazy('users:password_change_done')
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordChangeView, self).get_context_data(**kwargs)
+        context = super(
+            PasswordChangeView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Смена пароля'
         context['btn_label'] = 'Поменять'
         return context
 
 
-class PasswordResetDoneView(PasswordResetDoneView):
+class PasswordResetDoneView(views.PasswordResetDoneView):
     template_name = 'users/password_reset_done.html'
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordResetDoneView, self).get_context_data(**kwargs)
+        context = super(
+            PasswordResetDoneView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['message'] = 'Вам на почту отправлено письмо с подтверждением'
         context['btn_label'] = 'На главную'
         return context
 
 
-class PasswordResetConfirmView(PasswordResetConfirmView):
+class PasswordResetConfirmView(views.PasswordResetConfirmView):
     template_name = 'users/password_reset_confirm.html'
     success_url = reverse_lazy('users:password_reset_complete')
 
     def get_context_data(self, **kwargs):
         context = super(
             PasswordResetConfirmView,
-            self).get_context_data(**kwargs)
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['btn_label'] = 'Сбросить'
         return context
 
 
-class PasswordResetCompleteView(PasswordResetCompleteView):
+class PasswordResetCompleteView(views.PasswordResetCompleteView):
     template_name = 'users/password_reset_complete.html'
 
     def get_context_data(self, **kwargs):
         context = super(
-            PasswordResetCompleteView, self
+            PasswordResetCompleteView,
+            self,
         ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['message'] = 'Пароль успешно сброшен'
@@ -90,13 +101,16 @@ class PasswordResetCompleteView(PasswordResetCompleteView):
         return context
 
 
-class PasswordResetView(PasswordResetView):
+class PasswordResetView(views.PasswordResetView):
     template_name = 'users/password_reset.html'
     email_template_name = 'users/password_reset_email.html'
     success_url = reverse_lazy('users:password_reset_done')
 
     def get_context_data(self, **kwargs):
-        context = super(PasswordResetView, self).get_context_data(**kwargs)
+        context = super(
+            PasswordResetView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Сброс пароля'
         context['btn_label'] = 'Сбросить'
         return context
@@ -108,7 +122,10 @@ class SignUpView(generic.edit.CreateView):
     success_url = reverse_lazy('users:login')
 
     def get_context_data(self, **kwargs):
-        context = super(SignUpView, self).get_context_data(**kwargs)
+        context = super(
+            SignUpView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Регистрация'
         context['btn_label'] = 'Подтвердить'
         return context
@@ -121,7 +138,10 @@ class ProfileEditView(generic.edit.UpdateView):
     success_url = reverse_lazy('homepage:home')
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileEditView, self).get_context_data(**kwargs)
+        context = super(
+            ProfileEditView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Ваш профиль'
         return context
 
@@ -132,7 +152,10 @@ class ProfileView(generic.edit.UpdateView):
     template_name = 'users/user_detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileView, self).get_context_data(**kwargs)
+        context = super(
+            ProfileView,
+            self,
+        ).get_context_data(**kwargs)
         context['title'] = 'Ваш профиль'
         return context
 

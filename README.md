@@ -1,4 +1,7 @@
 # Django
+![project workflow](https://github.com/ewe08/Django/actions/workflows/python-package.yml/badge.svg)
+![project workflow](https://github.com/ewe08/Django/actions/workflows/django.yml/badge.svg)
+
 ### Инструкция по запуску:
 Для клонирования (Скачаивания проекта) себе на компьютер:
 
@@ -7,7 +10,7 @@
     2. Заходим в коммандную строку (терминал) 
     3. Пишем: </br> ```git clone https://github.com/ewe08/Django.git``` </br>
     (Может не работать из-за двухфакторной аутентификация) 
-    4. ```cd lyceum``` 
+    4. ```cd Django\lyceum``` 
     5. ```python -m venv venv``` 
     6. ```venv\Scripts\activate```
     7. ```pip install -r requirements.txt```
@@ -33,7 +36,7 @@
     2. Заходим в коммандную строку (терминал) 
     3. Пишем: </br> ```git clone https://github.com/ewe08/Django.git``` </br>
     (Может не работать из-за двухфакторной аутентификация) 
-    4. ```cd lyceum``` 
+    4. ```cd Django\lyceum``` 
     5. ```python3 -m venv venv``` 
     6. ```source venv\bin\activate```
     7. ```pip3 install -r requirements.txt```

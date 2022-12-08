@@ -7,27 +7,34 @@ class AbstractModel(models.Model):
     is_published = models.BooleanField(
         'опубликовано',
         default=True,
-        help_text='Проверка на публикацю.'
+        help_text='Проверка на публикацию.',
     )
 
     name = models.CharField(
         'название',
         max_length=150,
-        help_text='Название.'
+        help_text='Название.',
     )
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return self.name
+
 
 class AbstractModelWithSlug(AbstractModel):
+    name = models.CharField(
+        'название',
+        max_length=150,
+        help_text='Название.',
+        unique=True,
+    )
+
     slug = models.SlugField(
         max_length=200,
         unique=True,
-        help_text='slug для будущей ссылки.'
+        help_text='Slug для будущей ссылки.',
     )
 
     class Meta:
