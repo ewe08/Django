@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.mail import send_mail
 from django.views.generic import FormView
 
@@ -19,7 +20,7 @@ class FeedbackView(FormView):
             'Тема письма',
             f'{form.cleaned_data["text"]}',
             'from@example.com',
-            ['to@example.com'],
+            [settings.DEFAULT_FROM_EMAIL],
             fail_silently=False,
         )
         return super().form_valid(form)

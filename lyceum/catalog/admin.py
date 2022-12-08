@@ -22,11 +22,11 @@ class GalleryInline(admin.TabularInline):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = [
+    list_display = (
         'name',
         'is_published',
         'show_image_preview',
-    ]
+    )
     list_editable = ['is_published', ]
     list_display_links = ['name', ]
     filter_horizontal = ['tags', ]
