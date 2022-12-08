@@ -63,6 +63,7 @@ class ItemDetail(DetailView):
                 )
             )
         item = self.get_object()
+
         rating = Rating.objects.filter(
             item=item,
             user=request.user.id

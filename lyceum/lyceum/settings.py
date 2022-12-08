@@ -1,3 +1,5 @@
+import json
+import os
 from pathlib import Path
 
 import environ
@@ -11,6 +13,7 @@ env = environ.Env(
     DEFAULT_USER_EMAIL=(str, 'test-support-email@test.com')
 )
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env.read_env(BASE_DIR / '.env')
@@ -20,7 +23,7 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 if DEBUG:
-    INTERNAL_IPS = env.list('INTERNAL_IPS')
+    INTERNAL_IPS = json.loads(os.environ.get('INTERNAL_IPS', default='[]'))
 else:
     INTERNAL_IPS = []
 
@@ -139,7 +142,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'send_mail'
 

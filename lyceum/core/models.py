@@ -5,7 +5,7 @@ class NamedBaseModel(models.Model):
     name = models.CharField(
         'название',
         max_length=150,
-        help_text='Название.',
+        help_text='Название.'
     )
 
     class Meta:

@@ -36,7 +36,6 @@ class Category(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
 
 class Item(NamedBaseModel, PublishedBaseModel):
     objects = ItemManager()
-
     category = models.ForeignKey(
         Category,
         verbose_name='категория',
@@ -62,8 +61,6 @@ class Item(NamedBaseModel, PublishedBaseModel):
         'На главной?',
         default=False,
     )
-
-    objects = ItemManager()
 
     class Meta:
         verbose_name = 'товар'

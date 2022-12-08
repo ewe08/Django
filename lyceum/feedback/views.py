@@ -18,9 +18,16 @@ class FeedbackView(FormView):
             text=text,
         )
         send_mail(
-            'Тема письма',
+            'Спасибо за ваш фидбек',
             f'{form.cleaned_data["text"]}',
-            'from@example.com',
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.TEST_USER_EMAIL],
+            fail_silently=False,
+        )
+        send_mail(
+            f'Отправлен фидбек от {settings.TEST_USER_EMAIL}',
+            f'{form.cleaned_data["text"]}',
+            settings.TEST_USER_EMAIL,
             [settings.DEFAULT_FROM_EMAIL],
             fail_silently=False,
         )
