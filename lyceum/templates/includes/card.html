@@ -6,7 +6,7 @@
         </div>
         <div class="card-body">
         <h5 class="card-title">{{ item.category.name }}</h5>
-        <p class="card-text">{{ item.text|truncatewords_html:10|safe }}</p>
+        <p class="card-text">{{ item.text|truncatewords_html:10|safe }}
         <p class="card-text">Тэги:
             {% for tag in item.tags.all %}
                 '{{ tag.name }}'
