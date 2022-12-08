@@ -4,6 +4,8 @@ from django.db import models
 
 
 class Feedback(models.Model):
+    """Feedback model with text and creation data field."""
+
     text = models.TextField(
         help_text='Сюды текст надо для письма'
     )

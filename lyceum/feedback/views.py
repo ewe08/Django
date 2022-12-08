@@ -8,11 +8,18 @@ from .models import Feedback
 
 
 class FeedbackView(FormView):
+    """View class for feedback page.
+
+    render feedback html.
+    """
     template_name = 'feedback/feedback.html'
     form_class = FeedbackForm
     success_url = reverse_lazy('feedback:feedback')
 
     def form_valid(self, form):
+        """Create new feedback object and
+        add it to database and send success emails."""
+
         text = form.cleaned_data['text']
         Feedback.objects.create(
             text=text,
@@ -34,6 +41,9 @@ class FeedbackView(FormView):
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
+        """
+        :return: context with feedback form
+        """
         context = super().get_context_data()
         context['title'] = 'Фидбэк'
         context['form'] = self.get_form()
