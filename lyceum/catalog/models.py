@@ -110,6 +110,7 @@ class Photo(models.Model):
             return mark_safe(
                 f'<img src="{self.get_img.url}">'
             )
+        return None
 
     image_tmb.short_description = 'превью'
     image_tmb.allow_tags = True
