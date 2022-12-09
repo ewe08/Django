@@ -23,16 +23,11 @@ class Tag(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     class Meta:
         verbose_name = 'тэг'
         verbose_name_plural = 'тэги'
+        unique_together = (NamedBaseModel.name.field.name,)
 
 
 class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     """Category model with name, is_published, slug and weight field."""
-    name = models.CharField(
-        'название',
-        max_length=150,
-        unique=True,
-        help_text='Название.',
-    )
     weight = models.PositiveSmallIntegerField(
             'вес',
             default=100,
@@ -46,6 +41,7 @@ class Category(NamedBaseModel, PublishedBaseModel, SluggedBaseModel):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
+        unique_together = (NamedBaseModel.name.field.name,)
 
 
 class Item(NamedBaseModel, PublishedBaseModel):
