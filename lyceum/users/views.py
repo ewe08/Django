@@ -1,5 +1,4 @@
 from django.contrib.auth import views
-
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -8,6 +7,10 @@ from .models import CustomUser
 
 
 class LoginView(views.LoginView):
+    """View class for login page.
+
+    render login html.
+    """
     template_name = 'users/login.html'
 
     def get_context_data(self, **kwargs):
@@ -18,6 +21,10 @@ class LoginView(views.LoginView):
 
 
 class LogoutView(views.LogoutView):
+    """View class for logout page.
+
+    render logout html.
+    """
     template_name = 'users/logout.html'
 
     def get_context_data(self, **kwargs):
@@ -32,6 +39,10 @@ class LogoutView(views.LogoutView):
 
 
 class PasswordChangeDoneView(views.PasswordChangeDoneView):
+    """View class for password change done page.
+
+    render password change done html.
+    """
     template_name = 'users/password_change_done.html'
 
     def get_context_data(self, **kwargs):
@@ -46,6 +57,10 @@ class PasswordChangeDoneView(views.PasswordChangeDoneView):
 
 
 class PasswordChangeView(views.PasswordChangeView):
+    """View class for password change page.
+
+    render password change html.
+    """
     template_name = 'users/password_change.html'
     success_url = reverse_lazy('users:password_change_done')
 
@@ -60,6 +75,10 @@ class PasswordChangeView(views.PasswordChangeView):
 
 
 class PasswordResetDoneView(views.PasswordResetDoneView):
+    """View class for password reset done page.
+
+    render password reset done html.
+    """
     template_name = 'users/password_reset_done.html'
 
     def get_context_data(self, **kwargs):
@@ -74,6 +93,10 @@ class PasswordResetDoneView(views.PasswordResetDoneView):
 
 
 class PasswordResetConfirmView(views.PasswordResetConfirmView):
+    """View class for password reset confirm page.
+
+    render password reset confirm html.
+    """
     template_name = 'users/password_reset_confirm.html'
     success_url = reverse_lazy('users:password_reset_complete')
 
@@ -88,6 +111,10 @@ class PasswordResetConfirmView(views.PasswordResetConfirmView):
 
 
 class PasswordResetCompleteView(views.PasswordResetCompleteView):
+    """View class for password reset complete page.
+
+    render password reset complete html.
+    """
     template_name = 'users/password_reset_complete.html'
 
     def get_context_data(self, **kwargs):
@@ -102,6 +129,10 @@ class PasswordResetCompleteView(views.PasswordResetCompleteView):
 
 
 class PasswordResetView(views.PasswordResetView):
+    """View class for password reset page.
+
+    render password reset html.
+    """
     template_name = 'users/password_reset.html'
     email_template_name = 'users/password_reset_email.html'
     success_url = reverse_lazy('users:password_reset_done')
@@ -117,6 +148,10 @@ class PasswordResetView(views.PasswordResetView):
 
 
 class SignUpView(generic.edit.CreateView):
+    """View class for signup page.
+
+    render signup html.
+    """
     template_name = 'users/signup.html'
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('users:login')
@@ -132,6 +167,10 @@ class SignUpView(generic.edit.CreateView):
 
 
 class ProfileEditView(generic.edit.UpdateView):
+    """View class for profile edit page.
+
+    render profile edit html.
+    """
     model = CustomUser
     form_class = CustomUserChangeForm
     template_name = 'users/profile.html'
@@ -147,6 +186,10 @@ class ProfileEditView(generic.edit.UpdateView):
 
 
 class ProfileView(generic.edit.UpdateView):
+    """View class for profile page.
+
+    render profile html.
+    """
     model = CustomUser
     fields = ('first_name', 'last_name', 'email', 'birthday')
     template_name = 'users/user_detail.html'
@@ -161,6 +204,10 @@ class ProfileView(generic.edit.UpdateView):
 
 
 class UsersList(generic.ListView):
+    """View class for users list page.
+
+    render users list html.
+    """
     model = CustomUser
     template_name = 'users/user_list.html'
 

@@ -6,20 +6,28 @@ from .models import Feedback
 
 
 class FormTests(TestCase):
+    """Test form feedback."""
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.form = FeedbackForm()
 
     def test_text_label(self):
+        """Test correct text is in text_label"""
+
         text_label = FormTests.form.fields['text'].label
         self.assertEquals(text_label, 'Текст')
 
     def test_help_text_label(self):
+        """Test correct text is in help_text_label."""
+
         help_text_label = FormTests.form.fields['text'].help_text
         self.assertEquals(help_text_label, 'Сюды текст надо для письма')
 
     def test_redirect_feedback(self):
+        """Test redirect on feedback page."""
+
         form_data = {
             'text': 'Текст для теста',
         }
@@ -31,6 +39,8 @@ class FormTests(TestCase):
         self.assertRedirects(response, reverse('feedback:feedback'))
 
     def test_add_feedback(self):
+        """Test feedback add to the database."""
+
         feedbacks_count = Feedback.objects.count()
 
         form_data = {
@@ -44,6 +54,7 @@ class FormTests(TestCase):
         self.assertEqual(Feedback.objects.count(), feedbacks_count + 1)
 
     def test_form_show_correct(self):
+        """Test that form showed correct"""
         response = Client().get(reverse('feedback:feedback'))
 
         self.assertIn(

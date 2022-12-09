@@ -4,6 +4,8 @@ from .models import Rating
 
 
 class RatingForm(forms.ModelForm):
+    """Form for rating based on model rating."""
+
     class Meta:
         model = Rating
         fields = (

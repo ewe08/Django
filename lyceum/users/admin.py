@@ -5,7 +5,10 @@ from .forms import CustomUserChangeForm, CustomUserCreationForm
 from .models import CustomUser
 
 
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
+    """Class for user admin panel."""
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
@@ -29,6 +32,3 @@ class CustomUserAdmin(UserAdmin):
     )
     search_fields = ('email',)
     ordering = ('email',)
-
-
-admin.site.register(CustomUser, CustomUserAdmin)

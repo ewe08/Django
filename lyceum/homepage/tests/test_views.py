@@ -4,14 +4,9 @@ from django.urls import reverse
 from catalog.models import Category, Item, Tag
 
 
-class StaticURLTests(TestCase):
-    def test_homepage_endpoint(self):
-        # Делаем запрос к главной странице и проверяем статус
-        response = Client().get('/')
-        self.assertEqual(response.status_code, 200)
-
-
 class TaskPagesTests(TestCase):
+    """Test item list on homepage response content"""
+
     def tearDown(self):
         Item.objects.all().delete()
         super().tearDown()
@@ -32,11 +27,15 @@ class TaskPagesTests(TestCase):
         )
 
     def test_homepage_show_correct_content(self):
+        """Test show right item count and objects in context."""
+
         response = Client().get(reverse('homepage:home'))
         self.assertIn('items', response.context)
         self.assertEqual(len(response.context['items']), 0)
 
     def test_homepage_with_objects_show_correct_content(self):
+        """Test show correct objects content."""
+
         test_item = Item(
             name='test',
             is_published=True,

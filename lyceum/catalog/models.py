@@ -6,10 +6,13 @@ from tinymce.models import HTMLField
 
 from catalog.managers import ItemManager, TagManager
 from catalog.validators import validate_must_be_param
-from core.models import AbstractModel, AbstractModelWithSlug
+from core.models import (NamedBaseModel, PublishedBaseModel,
+                         SluggedBaseModel, UniqueNamedBaseModel)
 
 
-class Tag(AbstractModelWithSlug):
+class Tag(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+    """Tag model with name, is_published and slug field."""
+
     objects = TagManager()
 
     class Meta:
@@ -17,7 +20,8 @@ class Tag(AbstractModelWithSlug):
         verbose_name_plural = 'тэги'
 
 
-class Category(AbstractModelWithSlug):
+class Category(UniqueNamedBaseModel, PublishedBaseModel, SluggedBaseModel):
+    """Category model with name, is_published, slug and weight field."""
     weight = models.PositiveSmallIntegerField(
             'вес',
             default=100,
@@ -33,7 +37,12 @@ class Category(AbstractModelWithSlug):
         verbose_name_plural = 'категории'
 
 
-class Item(AbstractModel):
+class Item(NamedBaseModel, PublishedBaseModel):
+    """
+    Item model with name, is_published, category,
+    tags, text and is_on_main field.
+    """
+    objects = ItemManager()
     category = models.ForeignKey(
         Category,
         verbose_name='категория',
@@ -60,8 +69,6 @@ class Item(AbstractModel):
         default=False,
     )
 
-    objects = ItemManager()
-
     class Meta:
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
@@ -69,6 +76,8 @@ class Item(AbstractModel):
 
 
 class Photo(models.Model):
+    """Photo model with image, main_item and item_gallery field."""
+
     image = models.ImageField(
         'изображение',
         upload_to='uploads/%Y/%m',

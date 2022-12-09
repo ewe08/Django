@@ -1,13 +1,15 @@
+from catalog.models import Category, Item
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-
-from catalog.models import Category, Item
 from users.models import CustomUser
 
 from .models import Rating
 
 
 class RaitingModelTests(TestCase):
+    """Test rating model."""
+
     def tearDown(self):
         Rating.objects.all().delete()
         super().tearDown()
@@ -30,9 +32,11 @@ class RaitingModelTests(TestCase):
         )
 
     def test_create_rating(self):
+        """Test create rating with correct params."""
+
         raiting_count = Rating.objects.count()
         custom_user = CustomUser(
-            email='test@test.com',
+            email=settings.TEST_USER_EMAIL,
             password='123',
         )
         custom_user.full_clean()
@@ -48,9 +52,11 @@ class RaitingModelTests(TestCase):
         self.assertEqual(Rating.objects.count(), raiting_count + 1)
 
     def test_once_rating(self):
+        """Test create 2 ratings from one user to one item."""
+
         raiting_count = Rating.objects.count()
         custom_user = CustomUser(
-            email='test@test.com',
+            email=settings.TEST_USER_EMAIL,
             password='123',
         )
         custom_user.full_clean()

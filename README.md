@@ -6,7 +6,7 @@
 Для клонирования (Скачаивания проекта) себе на компьютер:
 
 - **Для Windows**
-    1. Убедитесь, что на компьютере установлен git и python
+    1. Убедитесь, что на компьютере установлен git и python(https://git-scm.com, https://www.python.org)
     2. Заходим в коммандную строку (терминал) 
     3. Пишем: </br> ```git clone https://github.com/ewe08/Django.git``` </br>
     (Может не работать из-за двухфакторной аутентификация) 
@@ -27,18 +27,18 @@
     ```python manage.py migrate```
     
     10. Создадим админа: </br> ```python manage.py createsuperuser```   
-    11. ```python3 manage.py runserver```
+    11. ```python manage.py runserver```
     12. Поздавляю! Проект работает! 
 </br> 
 
 - **Для Linux/MacOS**
-    1. Убедитесь, что на компьютере установлен git и python
+    1. Убедитесь, что на компьютере установлен git и python(https://git-scm.com, https://www.python.org)
     2. Заходим в коммандную строку (терминал) 
     3. Пишем: </br> ```git clone https://github.com/ewe08/Django.git``` </br>
     (Может не работать из-за двухфакторной аутентификация) 
-    4. ```cd Django\lyceum``` 
+    4. ```cd Django/lyceum``` 
     5. ```python3 -m venv venv``` 
-    6. ```source venv\bin\activate```
+    6. ```source venv/bin/activate```
     7. ```pip3 install -r requirements.txt```
     8. Создаём файл .env и вписываем туда:
         ```

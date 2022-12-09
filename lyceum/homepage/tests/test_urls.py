@@ -3,10 +3,10 @@ from django.urls import reverse
 
 
 class StaticURLTests(TestCase):
-    """Test about page."""
+    """Test homepage."""
 
-    def test_about_endpoint(self):
+    def test_homepage_endpoint(self):
         """Test response status by correct response."""
 
-        response = Client().get(reverse('about:about'))
+        response = Client().get(reverse('homepage:home'))
         self.assertEqual(response.status_code, 200)

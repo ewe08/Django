@@ -9,18 +9,28 @@ from rating.models import Rating
 
 
 class ItemList(ListView):
+    """View class for item list page.
+
+    render item list html.
+    """
     model = Item
     template_name = 'catalog/index_list.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        categories = Item.objects.categories()
-        return {
-            'title': 'Список',
-            'categories': categories,
-        }
+    def get_queryset(self):
+
+        return Item.objects.categories()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Список'
+        return context
 
 
 class ItemDetail(DetailView):
+    """View class for item detail page.
+
+    render item detail html.
+    """
     model = Item
     template_name = 'catalog/index_detail.html'
 
@@ -31,23 +41,19 @@ class ItemDetail(DetailView):
         )
 
     def get_context_data(self, **kwargs):
+        """
+        :return: context with item
+        """
         context = super().get_context_data()
         context['title'] = 'Подробнее'
         context['photos'] = Photo.objects.filter(
             item_galery=context['item'].id,
         )
-
-        if self.request.user.is_authenticated:
-            rating = Rating.objects.filter(
-                item=self.object,
-                user=self.request.user,
-                ).first()
-        else:
-            rating = None
-        if rating:
-            user_rating = rating.rate
-        else:
-            user_rating = False
+        rating = Rating.objects.filter(
+            item=self.object,
+            user=self.request.user.id
+        ).first()
+        user_rating = rating.rate if rating else None
         count = Rating.objects.filter(item=self.kwargs['pk']).count()
         average_rating = Rating.objects.filter(
             item=self.kwargs['pk'],
@@ -60,6 +66,8 @@ class ItemDetail(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        """Form processing and redirect."""
+
         form = RatingForm(request.POST)
         if not form.is_valid():
             return redirect(reverse(
@@ -68,13 +76,11 @@ class ItemDetail(DetailView):
                 )
             )
         item = self.get_object()
-        if request.user.is_authenticated:
-            rating = Rating.objects.filter(
-                item=item,
-                user=request.user,
-            ).first()
-        else:
-            rating = None
+
+        rating = Rating.objects.filter(
+            item=item,
+            user=request.user.id
+        ).first()
         if rating:
             rating.rate = form.cleaned_data['rate']
         else:
