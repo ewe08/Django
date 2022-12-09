@@ -3,13 +3,13 @@
 ![project workflow](https://github.com/ewe08/Django/actions/workflows/django.yml/badge.svg)
 
 ### Инструкция по запуску:
-Для клонирования (Скачаивания проекта) себе на компьютер:
+Для клонирования себе на компьютер:
 
 - **Для Windows**
     1. Убедитесь, что на компьютере установлен git и python(https://git-scm.com, https://www.python.org)
     2. Заходим в коммандную строку (терминал) 
     3. Пишем: </br> ```git clone https://github.com/ewe08/Django.git``` </br>
-    (Может не работать из-за двухфакторной аутентификация) 
+    (Может не работать из-за двухфакторной аутентификации) 
     4. ```cd Django\lyceum``` 
     5. ```python -m venv venv``` 
     6. ```venv\Scripts\activate```
@@ -28,14 +28,13 @@
     
     10. Создадим админа: </br> ```python manage.py createsuperuser```   
     11. ```python manage.py runserver```
-    12. Поздавляю! Проект работает! 
 </br> 
 
 - **Для Linux/MacOS**
     1. Убедитесь, что на компьютере установлен git и python(https://git-scm.com, https://www.python.org)
     2. Заходим в коммандную строку (терминал) 
     3. Пишем: </br> ```git clone https://github.com/ewe08/Django.git``` </br>
-    (Может не работать из-за двухфакторной аутентификация) 
+    (Может не работать из-за двухфакторной аутентификации) 
     4. ```cd Django/lyceum``` 
     5. ```python3 -m venv venv``` 
     6. ```source venv/bin/activate```
@@ -53,7 +52,6 @@
     ```python3 manage.py migrate```
     10. Создадим админа: </br> ```python3 manage.py createsuperuser```   
     11. ```python3 manage.py runserver```
-    12. Поздавляю! Проект работает! 
 </br>
 
 ### Если нам нужны тестовые данные:
@@ -65,13 +63,13 @@
 
 ### Для запуска проекта в dev режиме:
 - **Для Windows**
-    1. Убедитесь, что в проете есть настроенный .env
-    2. Убедитесь, что в терминале активированно виртуальное окружение 
+    1. Убедитесь, что в проекте есть настроенный .env
+    2. Убедитесь, что в терминале активировано виртуальное окружение 
     3. ```python manage.py runserver```
 
 - **Для Linux/MacOS**
-    1. Убедитесь, что в проете есть настроенный .env
-    2. Убедитесь, что в терминале активированно виртуальное окружение 
+    1. Убедитесь, что в проетке есть настроенный .env
+    2. Убедитесь, что в терминале активировано виртуальное окружение 
     3. ```python3 manage.py runserver```
 ## База данных
 ![image](https://user-images.githubusercontent.com/56339316/205954000-bc97df3d-e392-410b-93bd-12cbf8e0387a.png)
