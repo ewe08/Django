@@ -76,7 +76,7 @@ class Item(NamedBaseModel, PublishedBaseModel):
                   'или "роскошно".',
     )
     is_on_main = models.BooleanField(
-        'На главной?',
+        'на главной?',
         default=False,
     )
 

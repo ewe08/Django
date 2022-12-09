@@ -5,7 +5,7 @@ from catalog.models import Item
 from users.models import CustomUser
 
 
-class RainitgStatus(models.IntegerChoices):
+class RanitgStatus(models.IntegerChoices):
     """Class with rating statuses."""
 
     HATE = 1, 'Ненависть'
@@ -33,7 +33,7 @@ class Rating(models.Model):
     )
 
     rate = models.IntegerField(
-        choices=RainitgStatus.choices,
+        choices=RanitgStatus.choices,
         help_text='Оценка товара.'
     )
 
