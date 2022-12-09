@@ -21,14 +21,12 @@ class Rating(models.Model):
     item = models.ForeignKey(
         Item,
         on_delete=models.CASCADE,
-        related_name='item',
         help_text='Предмет оценки.'
     )
 
     user = models.ForeignKey(
         CustomUser,
         on_delete=models.CASCADE,
-        related_name='user',
         help_text='Оценщик товара.'
     )
 
@@ -46,6 +44,7 @@ class Rating(models.Model):
                 name='rating_once',
             )
         ]
+        default_related_name = 'ratings'
 
     def __str__(self):
         return f'{self.rate} - {self.item.name} - {self.user.email}'

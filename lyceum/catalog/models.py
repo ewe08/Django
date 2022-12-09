@@ -55,13 +55,11 @@ class Item(NamedBaseModel, PublishedBaseModel):
         verbose_name='категория',
         on_delete=models.CASCADE,
         help_text='Категория. Связь o2m.',
-        related_name='category'
     )
     tags = models.ManyToManyField(
         Tag,
         verbose_name='тэги',
         help_text='Теги. Связь m2m.',
-        related_name='tags'
     )
     text = HTMLField(
         'описание',
@@ -80,6 +78,7 @@ class Item(NamedBaseModel, PublishedBaseModel):
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
         ordering = ('name',)
+        default_related_name = 'items'
 
 
 class Photo(models.Model):
@@ -95,7 +94,6 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name='item_main',
     )
 
     item_galery = models.ForeignKey(
@@ -103,7 +101,6 @@ class Photo(models.Model):
         verbose_name='галерея фотографий',
         on_delete=models.CASCADE,
         help_text='Фотографии предмета.',
-        related_name='item_galery',
         null=True,
         blank=True,
     )
@@ -111,6 +108,7 @@ class Photo(models.Model):
     class Meta:
         verbose_name = 'фото'
         verbose_name_plural = 'фотографии'
+        default_related_name = 'photos'
 
     def __str__(self):
         return self.image.name
