@@ -7,23 +7,6 @@ class NamedBaseModel(models.Model):
     name = models.CharField(
         'название',
         max_length=150,
-        help_text='Название.'
-    )
-
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.name
-
-
-class UniqueNamedBaseModel(models.Model):
-    """Abstract model with unique name field."""
-
-    name = models.CharField(
-        'название',
-        unique=True,
-        max_length=150,
         help_text='Название.',
     )
 
