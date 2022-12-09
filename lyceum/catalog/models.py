@@ -4,8 +4,8 @@ from django.utils.safestring import mark_safe
 from sorl.thumbnail import get_thumbnail
 from tinymce.models import HTMLField
 
-from catalog.managers import ItemManager, TagManager
-from catalog.validators import validate_must_be_param
+from .managers import ItemManager, TagManager
+from .validators import validate_must_be_param
 from core.models import (NamedBaseModel, PublishedBaseModel,
                          SluggedBaseModel, UniqueNamedBaseModel)
 

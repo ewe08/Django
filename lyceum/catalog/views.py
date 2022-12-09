@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.views.generic import DetailView, ListView
 
-from catalog.models import Item, Photo
+from .models import Item, Photo
 from rating.forms import RatingForm
 from rating.models import Rating
 
