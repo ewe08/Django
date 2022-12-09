@@ -34,7 +34,7 @@ class FeedbackView(FormView):
         send_mail(
             f'Отправлен фидбек от {settings.TEST_USER_EMAIL}',
             f'{form.cleaned_data["text"]}',
-            settings.TEST_USER_EMAIL,
+            'getFeedback@django.com',
             [settings.DEFAULT_FROM_EMAIL],
             fail_silently=False,
         )

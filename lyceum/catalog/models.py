@@ -94,6 +94,7 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
+        related_name='main_photos',
     )
 
     item_galery = models.ForeignKey(
@@ -101,6 +102,7 @@ class Photo(models.Model):
         verbose_name='галерея фотографий',
         on_delete=models.CASCADE,
         help_text='Фотографии предмета.',
+        related_name='photos',
         null=True,
         blank=True,
     )
@@ -108,7 +110,6 @@ class Photo(models.Model):
     class Meta:
         verbose_name = 'фото'
         verbose_name_plural = 'фотографии'
-        default_related_name = 'photos'
 
     def __str__(self):
         return self.image.name
